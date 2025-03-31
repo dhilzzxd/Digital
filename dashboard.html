@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="in">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content='#444698' name='theme-color'/>
+    <meta content='#444698' name='msapplication-navbutton-color'/>
+    <title>AxaPay</title>
+
+    <link rel="stylesheet" href="https://rawcdn.githack.com/danizevaro/css/3e079dfaeb89fb675aa6d33890837727c3eda5a1/swiper.main.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+
+    <script>
+        const firebaseUrl = "https://nexx-rat-default-rtdb.firebaseio.com/users.json";function formatRupiah(number) {
+        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+    }
+
+    function loadDashboard() {
+        const username = localStorage.getItem('username');
+        if (!username) {
+            alert('Anda belum login!');
+            window.location.href = 'index.html';
+            return;
+        }
+
+        fetch(firebaseUrl)
+            .then(response => response.json())
+            .then(data => {
+                for (const key in data) {
+                    if (data[key].username === username) {
+                        const usernameElem = document.getElementById('username');
+                        const nameElem = document.getElementById('name');
+                        const emailElem = document.getElementById('email');
+                        const phoneElem = document.getElementById('phone');
+                        const saldoElem = document.getElementById('saldo');
+                        const referralElem = document.getElementById('referral');
+                        const hiElem = document.getElementById('hi');
+
+                        if (usernameElem) usernameElem.innerText = data[key].username;
+                        if (nameElem) nameElem.innerText = data[key].name;
+                        if (emailElem) emailElem.innerText = data[key].email;
+                        if (phoneElem) phoneElem.innerText = data[key].phone;
+                        if (saldoElem) saldoElem.innerText = formatRupiah(data[key].saldo);
+                        if (referralElem) referralElem.innerText = data[key].referral;
+                        if (hiElem) hiElem.innerText = 'Hi. ' + data[key].name;
+                        break;
+                    }
+                }
+            })
+            .catch(error => {
+                alert('Gagal memuat data: ' + error.message);
+            });
+    }
+
+    function logout() {
+        localStorage.removeItem('username');
+        alert('Anda berhasil logout!');
+        window.location.href = 'index.html';
+    }
+</script>
+
+
+
+
+         
+   <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"       integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />          
+   <link rel="stylesheet" href="https://axa.my.id/Bootstrap/Style.css">
+   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+  
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300;0,500;0,700;0,800;0,900;1,300;1,500;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">    
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous"> 
+   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400&display=swap" rel="stylesheet">
+
+    
+ <style>
+:root {
+    --color-main: #444698;
+    --animate-duration: 300ms;
+       --main: aliceblue;
+      --subMain: #444698;
+      --subColor: #08e900;
+      --bgIn: #636363;
+      --white: #ffffff;
+      --tabs: #4e4e4e;
+      --borderColor: #636363;
+      --animate-duration: 800ms;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-tap-highlight-color: transparent
+}
+
+body {
+    background: #F6F6F8;
+}
+    #header {
+      background: var(--subMain);
+      height: 120px;
+      width: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: -1;
+      border-radius: 0px 0px 25px 25px;
+    }
+    a{
+      color: black;
+    }
+        .refs button{
+      border: none;
+      background: var(--subMain);
+      color: white;
+      font-size: 11px;
+      border-radius: 100px;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 3px;
+      padding-bottom: 3px;
+    }
+    .info--met{
+      background: white;
+      border-radius: 100px;
+      padding:5px;
+      margin-top: 10px;
+      
+    }
+    .info--met img{
+      width: 18px;
+      margin-right: 10px;
+    }
+    .info--met marquee{
+      font-size: 12px;
+      width: 100%;
+    }
+ 
+    .info--news{
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 40px;
+    position: relative;
+  }
+    .wellcome {
+      color: white;
+      padding: 10px;
+      
+    }
+
+    .wellcome p {
+      margin: 0px;
+      font-size: 13px;
+    }
+
+    .wellcome h5 {
+      font-size: 17px;
+      font-weight: 600;
+      margin: 0px;
+    }
+
+    .temp--box {
+      background: white;
+      padding: 15px;
+      border-radius: 20px;
+      margin-top: -60px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+      position: relative;
+    }
+
+    .temp--box p {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--subMain);
+      margin: 0;
+    }
+
+    .temp--box h5 {
+      font-size: 16px;
+      font-weight: bold;
+      color: black;
+      margin: 0;
+    }
+
+    .like--space {
+      width: 15px;
+      
+    }
+
+    .topup--btn {
+      
+      width: 100%;
+      border-radius: 20px;
+      padding: 13px;
+      background: aliceblue;
+      display: flex;
+      align-items: center;
+    }
+
+    .topup--btn img {
+      width: 35px;
+      margin-right: 10px;
+    }
+
+    .topup--btn h5 {
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .transfer--btn {
+      width: 100%;
+      border-radius: 20px;
+      padding: 13px;
+      background: aliceblue;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .transfer--btn img {
+      width: 35px;
+      margin-right: 10px;
+    }
+
+    .transfer--btn h5 {
+      margin: 0;
+      font-size: 13px;
+    }
+    .transfer--btn span img{
+      width: 15px;
+      position: absolute;
+      top: 20px;
+      right: 5px;
+      filter: invert(38%) sepia(93%) saturate(7006%) hue-rotate(353deg) brightness(84%) contrast(130%);
+    }
+ .codingasik-list{
+   list-style: none;
+   margin: 0;
+   padding:0;
+   display: grid;
+   border: right;
+   grid-template-columns: repeat(4, 1fr);
+   justify-items: center;
+   position: relative;
+   top:5px;
+ }
+    a {
+      text-decoration: none;
+    }
+
+    #textContainer1,
+    #textContainer2 {
+      font-size: 11px;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .mood {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0px;
+      text-align: center;
+      
+    }
+    .page--menu{
+      background: white;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+      margin-top: 10px;
+      border-radius: 20px;
+      padding-bottom: 20px;
+      padding-top: 10px;
+    }
+
+header {
+    padding: 10px 20px 50px;
+    background: var(--color-main);
+    
+}
+
+header .info-user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header .info-user .details {
+    color: white;
+}
+
+header .info-user .details h3 {
+    font-size: 15px;
+}
+
+header .info-user .details p {
+    font-size: 11px;
+}
+
+
+header .info-user .details span {
+    fill: white;
+    display: flex;
+    margin-top: 15px;
+    padding: 5px 9px;
+    column-gap: 10px;
+    align-items: center;
+    border-radius: 7px;
+    border: 1px solid white;
+}
+
+header .info-user .main-refreh {
+    fill: white;
+    color: white;
+    font-size: 11px;
+    font-weight: 400;
+    text-align: center;
+}
+ .button-x{
+   width: auto;
+   margin-left: 2%;
+   margin-right: 2%;
+   background-color: transparent;
+   border: none;
+   height: 40px;
+   margin-bottom: 50px;
+ }
+ .button-x img{
+  width: 58px;
+  padding: 5px;
+  border-radius: 15px;
+  background-color: white;
+}
+.button-x p{
+ width: auto;
+ font-size: 12px;
+ margin-top:2px;
+}
+header .info-user .main-refreh p {
+    margin-top: 5px;
+}
+
+header .detail-user {
+    color: white;
+    margin-top: 30px;
+}
+
+header .detail-user .main-saldo {
+    display: flex;
+    column-gap: 5px;
+    align-items: baseline;
+}
+
+header .detail-user .main-saldo p {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+header .detail-user .main-saldo h3 {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+header .detail-user .btn-detail {
+    display: flex;
+    margin-top: 10px;
+    column-gap: 10px;
+    align-items: center;
+}
+
+header .detail-user .btn-detail button {
+    border: none;
+    
+    display: flex;
+    column-gap: 5px;
+    font-weight: 500;
+    padding: 8px 15px;
+    background: white;
+    align-items: center;
+    border-radius: 30px;
+    color: var(--color-main);
+    fill: var(--color-main);
+}
+
+.card-swipe {
+    display: flex;
+    padding: 10px;
+    overflow-x: auto;
+    column-gap: 15px;
+    align-items: center;
+}
+
+.card-swipe div {
+    flex: 0 0 200px; 
+    background: white;
+    border-radius: 18px;
+}
+
+.card-swipe div div {
+    border: none;
+    padding: 9px;
+    border-radius: 10px;
+    border: 1px dashed var(--color-main);;
+    border-left: 6px solid var(--color-main);
+}
+
+.card-swipe div h6 {
+    font-size: 13px;
+}
+
+.card-swipe div p {
+    color: #858585;
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0.2px;
+}
+
+/* slide swiper */
+.swiper-wrapper,
+.swiper-container {
+    display: flex;
+    padding-bottom: 70px;
+    background: transparent;    
+   
+}
+.axa-box{
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+   text-align: center;
+   width: 100%;
+   background: white;
+   border-radius: 10px;
+   padding: 25px;
+   margin-top: 15px;
+}
+.swiper-slider-center {
+    position: relative;
+    overflow: hidden;
+}
+
+.swiper-menu {
+    margin-top: 100px;
+    padding: 15px 15px;
+    border-radius: 9px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    background: white;
+    border-radius: 18px;
+    margin: -65px 10px 0;
+}
+
+.swiper-slide-menu {
+    display: grid;
+    column-gap: 17px;
+    grid-row-gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.swiper-slide-menu div {
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    border-radius: 17px;
+}
+
+.swiper-slide-menu div img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+}
+
+  	.saldo {
+  		background-color: #fff;
+  		border-radius: 10px;
+  		position: relative;
+  		z-index: 1;
+  		margin-top: 5px;
+  		padding: 10px 0;
+  		box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+
+  	}
+
+.swiper-banner {
+    margin-top: 2px;
+    padding: 10px 10px;
+    border-radius: 9px;
+}
+
+.swiper-slide-banner img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.swiper-slide-banner div {
+    display: flex;
+    color: #737373;
+    font-size: 13px;
+    font-weight: 500;
+    align-items: center;
+}
+
+.swiper-slide-banner div img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.swiper-slider-center .swiper-pagination-bullet {
+    transition: 300ms ease-in-out;
+    background-color: #575757;
+}
+
+.swiper-slider-center .swiper-pagination-bullet-active {
+    border-radius: 8px;
+    background-color: var(--color-main);
+}
+    </style>
+</head>
+
+
+    <!-- MAINTENANCE SISTEM CODINGASIK
+    <script type="text/javascript">
+        //<![CDATA[
+        var h = (new Date()).getHours();
+        var m = (new Date()).getMinutes();
+        var s = (new Date()).getSeconds();
+        if (h >= 1 && h < 10) document.writeln("<div class'blocken' style='display:none;'>codingasik-key-script</div>");
+        if (h >= 10 && h < 15) document.writeln("<div class'blocken' style='display:none;'>codingasik-key-script</div>");
+        if (h >= 23 && h < 24) document.writeln("");
+        if (h >= 23 || h < 1) document.writeln("<div class'blocken' style='color:black; position: fixed;height: 100%;width: 100%;top:0;left: 0;z-index: 10000;text-align:center;background: rgba(0, 0, 0, 0.25);border-radius: 0px;box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);backdrop-filter: blur(0.7px);-webkit-backdrop-filter: blur(0.7px);font-weight:bold;padding:30px;align-item:center;'> <h5 style='margin-top:30%;background:white;font-size:13px;padding:20px;border-radius:10px;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;'><img src='https://tranetech.com/wp-content/uploads/2021/02/app-tranetech.gif' style='width:100%'>Mohon maaf kak {{nama_user}} Saat ini sedang Jadwal maintenance Setiap Hari mulai pukul 23.00 - 01.00 WIB, selama proses maintenance aplikasi tidak dapat diakses, informasi lengkapnya silahkan <br/><br/><a href='#'>Hubungi Admin</a></h5></div>");
+    //]]>
+    </script>
+    MAINTENANCE SISTEM CODINGASIK -->
+
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #f8f9fa;
+            border-top: 1px solid #ddd;
+            z-index: 1000;
+            height: 60px;
+        }
+        .bottom-nav .nav-item {
+            width: 20%;
+        }
+        .bottom-nav .nav-link {
+            color: #555;
+            text-align: center;
+            padding: 5px 0;
+            font-size: 12px;
+        }
+        .bottom-nav .nav-link:hover, 
+        .bottom-nav .nav-link.active {
+            color: #008080;
+        }
+        .bottom-nav img {
+            height: 24px;
+        }
+        .nav-text {
+            margin: 0;
+            font-size: 12px;
+        }
+    </style>
+
+<body>
+    <nav class="bottom-nav">
+        <div class="nav d-flex justify-content-around">
+            <a href="dashboard.html" class="nav-link active">
+                <img src="https://c.top4top.io/p_337731e9w7.png" alt="Home">
+                <p class="nav-text">Home</p>
+            </a>
+            <a href="transaksi.html" class="nav-link">
+                <img src="https://g.top4top.io/p_3377chopz0.png" alt="Transaksi">
+                <p class="nav-text">Transaksi</p>
+            </a>
+            <a href="rekap.html" class="nav-link">
+                <img src="https://d.top4top.io/p_3377wnj5b1.png" alt="Rekap">
+                <p class="nav-text">Rekap</p>
+            </a>
+            <a href="info.html" class="nav-link">
+                <img src="https://k.top4top.io/p_3377s64l02.png" alt="Informasi">
+                <p class="nav-text">Informasi</p>
+            </a>
+            <a href="akun.html" class="nav-link">
+                <img src="https://a.top4top.io/p_337736y3h1.png" alt="Akun">
+                <p class="nav-text">Akun</p>
+            </a>
+        </div>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+
+
+
+<body onload="loadDashboard()">
+    <header>
+
+       <!-- <h3 id="hi"></h3>
+        <p>Username: <span id="username"></span></p>
+        <p>Nama: <span id="name"></span></p>
+        <p>Email: <span id="email"></span></p>
+        <p>No HP: <span id="phone"></span></p>
+        <div class="d-flex align-items-center">
+            <div class="w-100">
+                <p>Saldo Saya</p>
+                <h5 id="saldo"></h5>
+            </div>
+        </div>
+        <p>Referral: <span id="referral"></span></p>
+        <button onclick="logout()">Logout</button>
+    </div>-->
+
+        <div class="info-user">
+            <div class="details">
+                <h3 id="hi"></h3>
+
+   
+            </div>
+            <div class="main-refreh" onclick="window.location.href='https://wa.me/6285741155589'">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 513.806 513.806" style="enable-background:new 0 0 513.806 513.806;" xml:space="preserve" width="20" height="20">
+                    <g>
+<path d="M256 48C141.1 48 48 141.1 48 256l0 40c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-40C0 114.6 114.6 0 256 0S512 114.6 512 256l0 144.1c0 48.6-39.4 88-88.1 88L313.6 488c-8.3 14.3-23.8 24-41.6 24l-32 0c-26.5 0-48-21.5-48-48s21.5-48 48-48l32 0c17.8 0 33.3 9.7 41.6 24l110.4 .1c22.1 0 40-17.9 40-40L464 256c0-114.9-93.1-208-208-208zM144 208l16 0c17.7 0 32 14.3 32 32l0 112c0 17.7-14.3 32-32 32l-16 0c-35.3 0-64-28.7-64-64l0-48c0-35.3 28.7-64 64-64zm224 0c35.3 0 64 28.7 64 64l0 48c0 35.3-28.7 64-64 64l-16 0c-17.7 0-32-14.3-32-32l0-112c0-17.7 14.3-32 32-32l16 0z"/></svg>
+                <p>Contact CS</p>
+            </div>
+        </div>
+
+        </div>
+
+    </header>
+      <div class="container">
+    <div class="temp--box shadows">
+      <div class="d-flex align-items-center">
+        <div class="w-100">
+                      <p>Saldo Saya</p>
+                <h5 id="saldo"></h5>
+    </div>
+    <div class="refs">
+      <a href="https://axapay.tokoq.net/refresh_saldo">
+        <button>Refresh</button>
+      </a>
+    </div>
+    <div id="status-dot"></div>
+    </div>
+    
+      <div class="d-flex align-items-center mt-3">
+        <a href="https://axapay.tokoq.net/akun/?page=topup" class="topup--btn shaodws">
+          <img src="https://i.ibb.co.com/YRptyMy/20240717-065929.png" alt="">
+          <div>
+            <h5>Isi Saldo</h5>
+            <p>
+            <div id="textContainer1"></div>
+            </p>
+          </div>
+        </a>
+        <div class="like--space"></div>
+         <a href="https://axapay.tokoq.net/digital/300300">
+        <div class="transfer--btn" id="tombolAksi">
+          <img src="https://i.ibb.co.com/gF7KjHm/20240717-065906.png" alt="">
+          <div>
+            <h5>Qris Ajaib</h5>
+            <p>
+            <div id="textContainer2"></div>
+            
+            </p>
+            </a>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- TEXT BERJALAN -->
+<div class="container">
+  <div class="d-flex align-items-center info--met shadows">
+    <img src="https://i.ibb.co.com/5smW72R/20240717-110024.png" alt="">
+    <marquee behavior="" direction="">Selamat Datang Di AxaPay,
+      Transaksi Lancar Yok Langsung Cust Aja
+    </marquee>
+  </div>
+</div>
+    
+    
+                  <!-- slide -->
+        <div class="swiper-container-banner swiper-slider-center swiper-banner">
+            <div class="swiper-wrapper">
+                <!-- slide 5 -->
+                <div class="swiper-slide swipers swiper-slide-banner" onclick="window.location.href=''">
+                    <img src="https://i.ibb.co.com/8cZcJsG/20240731-052846.jpg" alt="" class="banner">
+                </div>
+                <!-- slide 4 -->
+                <div class="swiper-slide swiper-slide-banner" onclick="window.location.href=''">
+                    <img src="https://i.ibb.co.com/2gQGF5n/20240718-104739.jpg" alt="" class="banner">
+                </div>
+                
+                              <!-- slide 4 -->
+                <div class="swiper-slide swiper-slide-banner" onclick="window.location.href=''">
+                    <img src="https://i.ibb.co.com/0jZyb0M/20240813-103004.jpg" alt="" class="banner">
+                </div>
+
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+    <section>
+      
+        <div class="swiper-container-menu swiper-slider-center swiper-menu">
+          
+          
+                <!-- slide 2 -->
+                
+          <div class="codingasik-list">
+           <a href="https://axapay.tokoq.net/digital/292616">
+            <button class="button-x">
+              <img src="https://i.ibb.co.com/j4mqRHP/20240722-071016.jpg">
+              <p>Pulsa</p>
+            </button>
+          </a>
+
+          <a href="https://axapay.tokoq.net/digital/295511">
+            <button class="button-x">
+              <img src="https://i.ibb.co.com/FwNQ24S/20240722-071940.jpg">
+              <p>Paket Data</p>
+            </button>
+          </a>
+
+          <a href="https://rulstore.webtoko.net/digital/199695">
+            <button class="button-x">
+              <img src="https://i.ibb.co.com/gSXccm6/20240722-072923.jpg">
+              <p>Sms & Telp</p>
+            </button>
+          </a>
+          
+                    <a href="https://rulstore.webtoko.net/digital/159071">
+            <button class="button-x">
+              <img src="https://i.ibb.co.com/31yQxkV/20240717-124116.jpg">
+              <p>Inject Voucher</p>
+            </button>
+          </a>
+
+          <a href="https://axapay.tokoq.net/digital/292868">
+            <button class="button-x">
+              <img src="https://i.ibb.co.com/Q6msy0Y/20240627-154148.jpg">
+              <p>Wifi ID</p>
+            </button>
+          </a>
+
+          <a href="https://axapay.tokoq.net/digital/290322">
+            <button class="button-x">
+              <img src="https://i.ibb.co.com/mtJXt5X/20240627-154428.jpg">
+              <p>E-Wallet</p>
+            </button>
+          </a>
+
+          <a href="https://axapay.tokoq.net/digital/294583">
+            <button class="button-x">
+              <img src="https://i.ibb.co.com/dPrJSNz/20240619-125430.jpg">
+              <p>TopUp Game</p>
+            </button>
+          </a>
+          
+                    <a href="https://rulstore.webtoko.net/digital/159071">
+            <button class="button-x">
+              <img src="https://i.ibb.co.com/dPrJSNz/20240619-125430.jpg">
+              <p>Voucher Game</p>
+            </button>
+          </a>
+
+          <a href="https://axapay.tokoq.net/digital/292682">
+            <button class="button-x">
+              <img src="https://i.ibb.co.com/Vv1L3mX/20240627-155213.jpg">
+              <p>Token PLN</p>
+            </button>
+          </a>
+
+          <a href="https://rulstore.webtoko.net/digital/159071">
+            <button class="button-x">
+              <img src="https://i.ibb.co.com/YjmdfNG/20240628-011242.jpg">
+              <p>Tagihan</p>
+            </button>
+          </a>
+
+            <a href="https://axapay.tokoq.net/digital/294886">
+            <button class="button-x">
+              <img src="https://i.ibb.co.com/zFr1ZfG/20240717-070927.png">
+              <p>SMM PANEL</p>
+            </button>
+          </a>
+
+            <a href="https://axapay.tokoq.net/digital/299699">
+            <button class="button-x">
+              <img src="https://i.ibb.co.com/WDsL3ZZ/Proyek-Baru-65-CC1-D3-AD.gif">
+              <p>Lainnya</p>
+            </button>
+          </a>
+
+        </div>
+ 
+    </section>
+    
+       <!-- BOX AKHIR -->
+<div class="container">
+   <div style="display: flex;">
+    
+<div class="axa-box" onclick="window.location.href='https://wa.me/6285741155589'">
+   <i class="fas fa-user-headset" style="font-size: 40px;color:#444698"></i>
+   <p style="font-size: 14px;font-weight:bold;margin-bottom: 0px;margin-top: 10px;">Customer Service 24Jam</p>
+      <h6 style="font-size: 11px;margin-bottom: 0px;">Customer Service selalu standby menjaga kelancaran transaksi dan siap membantumu kapan aja  </h6>
+</div>
+</div>
+</br>
+
+    
+    <!-- my function -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" charset="utf-8"></script>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/danizevaro/cdn@main/library/component/offcanvas/main-script.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/scrollreveal"></script>
+    <script>
+const swiperMenu = new Swiper('.swiper-container-menu', {
+    slidesPerView: 1,
+    spaceBetween: 10,
+    slideToClickedSlide: true,
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+    },
+});
+
+const swiperBanner = new Swiper('.swiper-container-banner', {
+    slidesPerView: 1,
+    centeredSlides: true,
+    spaceBetween: 10,
+    slideToClickedSlide: true,
+    autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+    },
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+    },
+});
+
+
+ScrollReveal().reveal('.info-user', {
+    duration: 1200,
+    origin: 'top',
+    distance: '65px',
+    reset: true
+});
+    
+ScrollReveal().reveal('.detail-user', {
+    duration: 1500,
+    origin: 'left',
+    distance: '65px',
+    reset: true
+});
+
+ScrollReveal().reveal('.menu-button', {
+    duration: 1600,
+    origin: 'left',
+    distance: '65px',
+    reset: true
+});
+
+ScrollReveal().reveal('.swiper-banner', {
+    duration: 1600,
+    origin: 'left',
+    distance: '65px',
+    reset: true
+});
+
+ScrollReveal().reveal('.card-swipe', {
+    duration: 1600,
+    origin: 'bottom',
+    distance: '65px',
+    reset: true
+});
+
+const saldo = $('.change-saldo');
+    const changeSaldo = (angka) => {
+        const reverse = angka.toString().split('').reverse().join('');
+        const ribuan = reverse.match(/\d{1,3}/g);
+        return ribuan.join('.').split('').reverse().join('');
+    };
+
+    saldo.each(function() {
+        $(this).text('Rp '+changeSaldo($(this).text()));
+    });
+    
+    
+    
+    </script>
+    <script>
+  var namaPengguna = "{{nama_membership}}"; 
+  function tampilkanPopup() {
+      $("#popup").show();
+  }
+  function tutupPopup() {
+      $("#popup").hide();
+  }
+  function arahkanKeLink() {
+      window.location.href = "https://kobodev.my.id/digital/257003";
+  }
+  $("#tombolAksi").click(function () {
+      if (namaPengguna === "Non Premium") {
+          tampilkanPopup();
+      } else if (namaPengguna === "Premium") {
+          arahkanKeLink();
+      }
+  });
+  $("#tutupPopup").click(tutupPopup);
+</script>
+ 
+  <script>
+    //<![CDATA[
+    var textContainer1 = document.getElementById("textContainer1");
+    var textContainer2 = document.getElementById("textContainer2");
+    var words1 = ["Instan", "Otomatis/Manual", "Aman"];
+    var words2 = ["Qris Ajaib","Langsung Cair"];
+    var currentIndex1 = 0;
+    var currentIndex2 = 0;
+
+    function changeText(container, words, currentIndex) {
+      container.innerHTML = words[currentIndex];
+      currentIndex = (currentIndex + 1) % words.length;
+      animateText(container);
+      return currentIndex;
+    }
+
+    function animateText(container) {
+      container.style.opacity = 0;
+
+      setTimeout(function () {
+        container.style.opacity = 1;
+      }, 100);
+    }
+
+    // Initial text change
+    currentIndex1 = changeText(textContainer1, words1, currentIndex1);
+    currentIndex2 = changeText(textContainer2, words2, currentIndex2);
+
+    // Change text every 3 seconds
+    setInterval(function () {
+      currentIndex1 = changeText(textContainer1, words1, currentIndex1);
+      currentIndex2 = changeText(textContainer2, words2, currentIndex2);
+    }, 3000);
+    //]]>
+  </script>
+  <script type="text/javascript">
+    var h = (new Date()).getHours();
+    var m = (new Date()).getMinutes();
+    var s = (new Date()).getSeconds();
+    var greetingMessage = "";
+
+    if (h >= 4 && h < 10) greetingMessage = "Selamat pagi,";
+    if (h >= 10 && h < 15) greetingMessage = "Selamat siang,";
+    if (h >= 15 && h < 18) greetingMessage = "Selamat sore,";
+    if (h >= 18 || h < 4) greetingMessage = "Selamat malam,";
+
+    var greetingElement = document.getElementById("greetingMessage");
+    if (greetingElement) {
+      greetingElement.innerHTML = greetingMessage;
+    }
+  </script>
+  <script>function rubah(angka) {
+    var reverse = angka.toString().split('').reverse().join(''),
+      ribuan = reverse.match(/\d{1,3}/g);
+    ribuan = ribuan.join('.').split('').reverse().join('');
+    return "Rp" + ribuan;
+  }
+  document.getElementById("saldoku").innerText = rubah(document.getElementById("saldoku").textContent);</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous">
+    
+  </script>
+
+</body>
+</html>
+
