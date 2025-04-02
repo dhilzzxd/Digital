@@ -34,7 +34,11 @@
                 return null;
             }
         }
+function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+        }
 
+  
         // Fungsi untuk mengambil parameter dari URL
         function getUrlParameter(name) {
             const params = new URLSearchParams(window.location.search);
@@ -70,7 +74,7 @@
           </div>
               <div class="d-flex justify-content-between py-1">
             <p class="ind">Total Trx:</p>
-            <p class="val" id="val-2" id="produk">${transaksi.total}</p>
+            <p class="val" id="val-2" id="produk">${formatRupiah(transaksi.total)}</p>
           </div>
           <div class="d-flex justify-content-between py-1">
             <p class="ind">Tujuan:</p>
@@ -87,7 +91,7 @@
           <hr class="ziz">
           <div class="d-flex justify-content-between py-3">
             <p class="fwb-6">TOTAL BAYAR:</p>
-            <p class="fwb-6" onclick="copyIn()"><span id="val-5">${transaksi.total}</span> <span class="ms-1"></p>
+            <p class="fwb-6" onclick="copyIn()"><span id="val-5">${formatRupiah(transaksi.total)}</span> <span class="ms-1"></p>
           </div>`;
                 } else {
                     document.getElementById('status').innerText = 'Transaksi tidak ditemukan.';
