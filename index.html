@@ -1,25 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
+    <title>Loading with Logo and Spinning Circle</title>
+    <!-- Link untuk font Poppins dari Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #008080;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .loading-container {
+            text-align: center;
+            position: absolute;
+            display: flex;
+            flex-direction: column; /* Menyusun elemen secara vertikal */
+            align-items: center;
+        }
+
+        /* Styling untuk gambar */
+        .loading-container img {
+            max-width: 120px; /* Membatasi lebar gambar agar responsif */
+            height: auto; /* Membiarkan tinggi gambar otomatis sesuai rasio */
+            margin-bottom: 15px; /* Memberikan jarak antara logo dan spinner */
+            border-radius: 12px;
+        }
+
+        @keyframes rotate-logo {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Bulat yang berputar */
+        .loading-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 4px solid #ffff;
+            border-top: 4px solid transparent;
+            margin-right: 15px; /* Memberikan jarak antara spinner dan teks */
+            animation: spin 1.5s linear infinite;
+        }
+
+        /* Animasi untuk putaran bulat */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Teks loading dengan font Poppins */
+        .loading-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600; /* Menjadikan font lebih bold */
+            font-size: 15px;
+            color: #ffff;
+            display: flex;
+            align-items: center; /* Menyusun spinner dan teks secara horizontal */
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <!-- Logo di atas -->
+        
+        <!-- Teks loading dengan spinner di sebelah kiri -->
+        <div class="loading-text">
+            <div class="loading-circle"></div>
+            <div>Loading...</div>
+        </div>
+    </div>
+</body>
     <script>
         // Cek sesi login
         window.onload = function() {
             const username = localStorage.getItem('username');
             if (username) {
-                // Jika sudah login, pergi ke dashboard
                 window.location.href = 'dashboard.html';
             } else {
-                // Jika belum login, pergi ke login
                 window.location.href = 'login.html';
             }
         }
     </script>
-</head>
-<body>
-    <h1>Loading...</h1>
-    <p>Anda sedang dialihkan...</p>
-</body>
+
 </html>
