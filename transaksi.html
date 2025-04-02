@@ -299,7 +299,7 @@ function formatRupiah(number) {
             filteredTransactions.forEach((transaksi) => {
                 const transaksiElement = document.createElement("div");
                 transaksiElement.innerHTML = `
-            <div class="transaction-card" onclick="window.location.href='done.html?id=${transaksi.IdTransaksi}'">
+            <div class="transaction-card" onclick="window.location.href='done.html?id=${transaksi.idTransaksi}'">
                 <img src="https://cdn-icons-png.flaticon.com/128/6418/6418336.png" alt="Logo Produk" class="logo">
                 <div class="transaction-card-header">
                     ${transaksi.produk} 
