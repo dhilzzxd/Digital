@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <script>
+        // Cek sesi login
+        window.onload = function() {
+            const username = localStorage.getItem('username');
+            if (username) {
+                // Jika sudah login, pergi ke dashboard
+                window.location.href = 'dashboard.html';
+            } else {
+                // Jika belum login, pergi ke login
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Loading...</h1>
+    <p>Anda sedang dialihkan...</p>
+</body>
+</html>
