@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💎 Token PLN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://dhilzzxd.github.io/Digital/Agus.css">
+</head>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigasi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Link Boxicons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            margin-bottom: 50px; /* Jarak di bawah body */
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #008577;
+            padding: 15px;
+            color: white;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .icon,
+        .home {
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .page-title {
+            font-size: 20px;
+            margin-left: 30px;
+            flex: 1;
+        }
+
+        .icon-wrapper {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="icon-wrapper">
+            <i class="bx bx-arrow-back icon" onclick="history.back();"></i>
+            <span class="page-title">Token PLN</span>
+        </div>
+        <i class="bx bx-home-alt home"></i>
+    </div>
+</body>  
+
+
+
+<body style="margin-top: 55px;">
+  <form class="input_konten">
+    <div class="atas"></div>
+    <br>
+    <div class="kotak3">
+      <img class="gambar3" src="https://cdn-icons-png.flaticon.com/128/252/252590.png" alt="Free Fire" />
+      <div class="judul3">Token PLN</div>
+      <div class="desc3">Token PLN</div>
+    </div>
+
+    <div class="kotak" id="kotakstik">
+      <p style="font-size: 14px;margin-left: 5px;margin-bottom: 3px;margin-top: 2px;font-weight: bold;color: #5b5a5c;">Masukkan Nomor Pelanggan</p>
+      <input style="font-size: 15px; margin-top: 5px; width: 90%;" 
+       type="number" 
+       id="nomor" 
+       placeholder="Masukkan tujuan" 
+       min="10000000" 
+       max="999999999999999" 
+       required>
+    </div>
+  </form>
+
+  <div class="kotak" style="margin-top: 15px;">
+    <div class="tab">
+      <button class="tablinks active" onclick="openCity(event, 'Dmn')">Token PLN</button>
+    </div>
+  </div>
+
+  <div id="Dmn" class="tabcontent" style="display: block;">
+    <div style="margin-top: 0px;padding: 20px;padding-top: 0px;">
+      <div id="product-list"></div>
+    </div>
+  </div>
+
+  <script>
+    const firebaseUrl = "https://nexx-rat-default-rtdb.firebaseio.com/users.json";
+    const transaksiUrl = "https://nexx-rat-default-rtdb.firebaseio.com/transaksi.json";
+
+    let produkInfo = {};
+
+    function formatRupiah(number) {
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+    }
+
+    async function getUserData() {
+      const username = localStorage.getItem('username');
+      if (!username) {
+        alert('Anda belum login!');
+        window.location.href = 'index.html';
+        return;
+      }
+      try {
+        const response = await fetch(firebaseUrl);
+        const data = await response.json();
+        for (const key in data) {
+          if (data[key].username === username) {
+            return { key, saldo: data[key].saldo, idPembeli: key };
+          }
+        }
+        return null;
+      } catch (error) {
+        alert('Gagal memuat data: ' + error.message);
+        return null;
+      }
+    }
+
+    async function updateSaldo(key, newSaldo) {
+      try {
+        await fetch(`https://nexx-rat-default-rtdb.firebaseio.com/users/${key}.json`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ saldo: newSaldo })
+        });
+        loadSaldo();
+      } catch (error) {
+        alert('Gagal mengupdate saldo: ' + error.message);
+      }
+    }
+
+    const telegramToken = '7893838697:AAHjzozGqqW6d5KSaJv4uECnfuy0uAyRI2A';  
+    const chatId = '-1002543462383';  
+
+async function sendToTelegram(message) {
+  const url = `https://api.telegram.org/bot${telegramToken}/sendMessage`;
+  const params = {
+    chat_id: chatId,
+    text: message,
+  };
+
+  const queryString = new URLSearchParams(params).toString();
+  const apiUrl = `${url}?${queryString}`;
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+    });
+    const data = await response.json();
+    if (data.ok) {
+      console.log('Pesan berhasil dikirim ke Telegram');
+    } else {
+      console.error('Gagal mengirim pesan ke Telegram:', data);
+    }
+  } catch (error) {
+    console.error('Error saat mengirim pesan ke Telegram:', error);
+  }
+}
+
+async function catatTransaksi(idPembeli, total, tujuan, produkNama) {
+  const idTransaksi = Date.now();
+  const tanggal = new Date().toLocaleString();
+  const transaksi = {
+    idPembeli,
+    idTransaksi,
+    total,
+    tujuan,
+    produk: produkNama,
+    tanggal,
+    status: "Pending"
+  };
+  try {
+    await fetch(transaksiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(transaksi)
+    });
+
+    // Mengirim informasi pembelian ke Telegram
+    const message = `📦 Pembelian Produk\n\nID Pembeli: ${idPembeli}\nProduk: ${produkNama}\nTotal: ${formatRupiah(total)}\nTujuan: ${tujuan}\nTanggal: ${tanggal}`;
+    await sendToTelegram(message);
+
+    window.location.href = `https://dhilzzxd.github.io/Digital/done.html?id=${idTransaksi}`;
+  } catch (error) {
+    alert('Gagal mencatat transaksi: ' + error.message);
+  }
+}
+
+    async function beliProduk(harga, produkNama) {
+      produkInfo = { harga, produkNama };
+
+      // Menampilkan konfirmasi pembelian dengan alert
+      const confirmBeli = confirm(`Apakah Anda yakin ingin membeli produk ${produkNama} seharga ${formatRupiah(harga)}?`);
+      if (confirmBeli) {
+        const tujuan = document.getElementById('nomor').value.trim();
+        if (!tujuan) {
+          alert("Tujuan tidak boleh kosong!");
+          return;
+        }
+
+        const userData = await getUserData();
+        if (userData) {
+          if (userData.saldo >= produkInfo.harga) {
+            const newSaldo = userData.saldo - produkInfo.harga;
+            await updateSaldo(userData.key, newSaldo);
+            await catatTransaksi(userData.idPembeli, produkInfo.harga, tujuan, produkInfo.produkNama);
+            alert('Pembelian berhasil!');
+          } else {
+            alert('Saldo tidak cukup!');
+          }
+        }
+      } else {
+        alert("Pembelian dibatalkan.");
+      }
+    }
+
+    async function loadSaldo() {
+      const userData = await getUserData();
+      if (userData) {
+        document.getElementById('saldo-info').innerText = 'Saldo: ' + formatRupiah(userData.saldo);
+      } else {
+        document.getElementById('saldo-info').innerText = 'Saldo: Tidak Ditemukan';
+      }
+    }
+
+    function hargaNya(number) {
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+    }
+
+    async function loadProducts() {
+  try {
+    const response = await fetch('https://nexx-rat-default-rtdb.firebaseio.com/produk.json');
+    const products = await response.json();
+    const productList = document.getElementById('product-list');
+
+    // Iterasi untuk setiap produk berdasarkan key unik
+    for (const key in products) {
+      const product = products[key];  // Mengakses data produk berdasarkan key
+
+      // Filter produk dengan kategori 'Free Fire'
+      if (product.kategori === 'Token PLN') {
+        const productCard = `
+          <div class="produk_pulsa" data-harga="${product.harga}" data-produk="${product.nama}">
+            <h2>${product.nama}</h2>
+            <p>${product.deskripsi}</p>
+            <p>${hargaNya(product.harga)}</p>
+            <button ${product.status === 0 ? 'disabled' : ''} onclick="beliProduk(${product.harga}, '${product.nama}')">BELI</button>
+          </div>
+        `;
+        productList.insertAdjacentHTML('beforeend', productCard);
+      }
+    }
+
+  } catch (error) {
+    alert('Gagal memuat produk: ' + error.message);
+  }
+}
+
+    loadSaldo();
+    loadProducts();
+  </script>
+</body>
+</html>
