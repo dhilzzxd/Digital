@@ -1,0 +1,878 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kembali</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <style type="text/css">
+      @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
+      *{
+        font-family: 'Poppins', sans-serif;
+        user-select: none;
+      }
+
+      body {
+        background-color: #EDF1FC;
+      }
+
+      p {
+        margin: 0;
+        font-size: 13px
+      }
+
+      input {
+        border: none;
+        -webkit-transition: 0.5s;
+        transition: 0.5s;
+        outline: none;
+      }
+
+      a, a:focus, a:hover {
+        text-decoration: none;
+        color: inherit;
+      }
+      .head {
+        background-color: #00897B;
+      }
+      .t-judul {
+        font-weight: 600;
+        color: #fff;
+        padding: 15px;
+        padding-top: 10px;
+        font-size: 18px
+      }
+
+
+      .tabcontent {
+        display: none;
+        -webkit-animation: fadeEffect 1s;
+        animation: fadeEffect 1s;
+      }
+
+      @-webkit-keyframes fadeEffect {
+        from {opacity: 0;}
+        to {opacity: 1;}
+      }
+
+      @keyframes fadeEffect {
+        from {opacity: 0;}
+        to {opacity: 1;}
+      }
+      .tab {
+        width: 100%;
+        border-radius: 20px
+      }
+      .tab button {
+        background-color: transparent;
+        border: none;
+        font-weight: 200;
+        font-size: 16px;
+        padding: 5px;
+        width: 100%;
+        color: #fff
+      }
+
+      .tab button.active {
+        border-bottom: 2px solid;
+        font-weight: 500;
+        color: #fff;
+        -webkit-animation: fadeEffect 1s;
+        animation: fadeEffect 1s;
+      }
+
+      .pad-tab {
+        padding: 20px
+      }
+      .img-tab-1 {
+        padding: 15px;
+        border-radius: 20px;
+        box-shadow: rgba(0, 0, 0, 0.15) 0 0 5px 1px;
+        background-color: #fff
+      }
+      .img-tab-1 img {
+        width: 100%;
+        border-radius: 15px
+      }
+      .isi-tab-1 {
+        margin-top: 15px
+      }
+      .icon-tab-1{
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 50%;
+        box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 5px 1px;
+
+      }
+      .icon {
+        width: 20px;
+        height: 20px;
+        background-color: #1976d3;
+        border-radius: 50%
+      }
+      .isi-list-tab {
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 15px;
+        margin-top: -15px;
+        box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 5px 1px;
+      }
+      .box-list {
+        margin-top: 30px
+      }
+      .list {
+        margin-bottom: 30px
+      }
+      
+    </style>
+  </head>
+  
+  <style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        padding-bottom: 60px; /* Memberikan ruang agar konten tidak tertutup */
+    }
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #f8f9fa;
+        border-top: 1px solid #ddd;
+        z-index: 1000;
+        height: 60px;
+    }
+    .bottom-nav .nav-item {
+        width: 20%;
+    }
+    .bottom-nav .nav-link {
+        color: #555;
+        text-align: center;
+        padding: 5px 0;
+        font-size: 12px;
+    }
+    .bottom-nav .nav-link:hover, 
+    .bottom-nav .nav-link.active {
+        color: #008080;
+    }
+    .bottom-nav img {
+        height: 28px;
+    }
+    .nav-text {
+        margin: 0;
+        font-size: 15px;
+    }
+</style>
+
+<body>
+    <nav class="bottom-nav">
+        <div class="nav d-flex justify-content-around">
+            <a href="dashboard.html" class="nav-link">
+                <img src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png" alt="Home">
+                <p class="nav-text">Home</p>
+            </a>
+            <a href="transaksi.html" class="nav-link">
+                <img src="https://cdn-icons-png.flaticon.com/128/6340/6340511.png" alt="Transaksi">
+                <p class="nav-text">Transaksi</p>
+            </a>
+            <a href="info.html" class="nav-link active">
+                <img src="https://cdn-icons-png.flaticon.com/128/8/8201.png" alt="Informasi">
+                <p class="nav-text">Informasi</p>
+            </a>
+            <a href="akun.html" class="nav-link">
+                <img src="https://cdn-icons-png.flaticon.com/128/7542/7542244.png" alt="Akun">
+                <p class="nav-text">Akun</p>
+            </a>
+        </div>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+  
+  <body>
+
+    <section class="header">
+      <div class="head">
+        <p class="t-judul">Informasi</p>
+        <div class="h-bot">
+          <div class="tab d-flex justify-content-between align-items-center">
+            
+            <button class="tablinks" onclick="openCity(event, 'tab-2')" id="defaultOpen">Semua</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="body-an">
+
+      <!-- TAB 1 -->
+      <div id="tab-1" class="tabcontent">
+        <div class="pad-tab">
+         <div class="head-tab-1">
+           <div class="img-tab-1">
+            <img src="https://i.ibb.co/DMw2CN6/20240226-012450.jpg"/>
+          </div>
+
+          <div class="isi-tab-1">
+            <div class="d-flex justify-content-center">
+              <div class="icon-tab-1 d-flex justify-content-center">
+                <div class="icon"></div>
+              </div>
+            </div>
+            <div class="isi-list-tab">
+              <div class="box-list">
+
+                <div class="justify-content-between d-flex align-items-center list">
+                  <!-- Kiri -->
+                  <p class="text-start">1🏅. Albanicell</p>
+                  <!-- Kanan -->
+                  <p class="text-start">5768 Trx</p>
+                </div>
+
+                <div class="justify-content-between d-flex align-items-center list">
+                  <!-- Kiri -->
+                  <p class="text-start">2🥈. Gogatsu</p>
+                  <!-- Kanan -->
+                  <p class="text-start">4670 Trx</p>
+                </div>
+
+                <div class="justify-content-between d-flex align-items-center list">
+                  <!-- Kiri -->
+                  <p class="text-start">3🥉. Deri Setiawan</p>
+                  <!-- Kanan -->
+                  <p class="text-start">3547 Trx</p>
+                </div>
+                
+                <div class="justify-content-between d-flex align-items-center list">
+                  <!-- Kiri -->
+                  <p class="text-start">4. Dce××××na</p>
+                  <!-- Kanan -->
+                  <p class="text-start"> 2567 Trx</p>
+                </div>
+
+<div class="justify-content-between d-flex align-items-center list">
+                  <!-- Kiri -->
+                  <p class="text-start">5. Alfxxxxup</p>
+                  <!-- Kanan -->
+                  <p class="text-start"> 1678 Trx</p>
+                </div>
+
+
+<div class="justify-content-between d-flex align-items-center list">
+                  <!-- Kiri -->
+                  <p class="text-start">6. Khaxxxx</p>
+                  <!-- Kanan -->
+                  <p class="text-start"> 832 Trx</p>
+                </div>
+
+
+<div class="justify-content-between d-flex align-items-center list">
+                  <!-- Kiri -->
+                  <p class="text-start">7. Tomxxxx</p>
+                  <!-- Kanan --><!DOCTYPE html>
+                  <html lang="in">
+                  <head>
+                  				<title>Judul halaman</title>
+                  </head>
+                  <body>
+                  				
+                  </body>
+                  </html>
+                  <p class="text-start"> 754 Trx</p>
+                </div>
+
+
+<div class="justify-content-between d-flex align-items-center list">
+                  <!-- Kiri -->
+                  <p class="text-start">8. Bamxxxxxxxx</p>
+                  <!-- Kanan -->
+                  <p class="text-start"> 732 Trx</p>
+                </div>
+
+
+<div class="justify-content-between d-flex align-items-center list">
+                  <!-- Kiri -->
+                  <p class="text-start">9. Imox</p>
+                  <!-- Kanan -->
+                  <p class="text-start"> 610 Trx</p>
+                </div>
+
+
+<div class="justify-content-between d-flex align-items-center list">
+                  <!-- Kiri -->
+                  <p class="text-start">10. Rahxxx</p>
+                  <!-- Kanan -->
+                  <p class="text-start"> 567 Trx</p>
+                </div>
+
+
+
+
+
+
+
+
+              </div>            
+            </div>
+          </div>  
+        </div> 
+      </div>
+    </div>
+
+
+    <style type="text/css">
+      .head-tab-2 {
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 18px;
+        box-shadow: rgba(0, 0, 0, 0.15) 0 0 5px 1px;
+      }
+      .isi-head-2 {
+        width: 100%;
+        text-align: center;
+        line-height: 15px
+      }
+      .join {
+        background-color: #1976d3;
+        border-radius: 10px;
+        padding: 7.5px 10px;
+        font-size: 13px;
+        color: #fff;
+        text-align: center;
+      }
+      .harga {
+        background-color: #d63384;
+        border-radius: 10px;
+        padding: 7.5px 10px;
+        font-size: 13px;
+        color: #fff;
+        text-align: center;
+      }
+      .btn-head {
+        margin-top: 10px
+      }
+
+      .join:hover, .harga:hover {
+        -webkit-animation: fadeEffect 1s;
+        animation: fadeEffect 1s;
+      }
+      .isi-tab-2 {
+        border-radius: 20px;
+        background-color: #fff;
+        padding: 15px;
+        box-shadow: rgba(0, 0, 0, 0.15) 0 0 5px 1px;
+        margin-bottom: 15px
+      }
+      .j-tab-2 {
+        line-height: 15px
+      }
+      .j-tab-2 p {
+        font-weight: 600
+      }
+      .i-tab-2{
+        margin-top: 10px;
+        line-height: 15px
+      }
+      .f-tab-2 {
+        margin-top: 20px
+      }
+      .fi-tab {
+        line-height: 15px
+      }
+      .fw-600 {
+        font-weight: 600
+      }
+      .op-8 {
+        opacity: 0.8
+      }
+      .fs-11 {
+       font-size: 11px 
+      }
+    </style>
+    <!-- TAB 2 -->
+    <div id="tab-2" class="tabcontent">
+      <div class="pad-tab">
+        <div class="head-tab-2">
+          <!-- Atas -->
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="isi-head-2">
+              <p>3k+</p>
+              <p>Produk</p>
+            </div>
+            <div class="isi-head-2">
+              <p>1k+</p>
+              <p>Voucher</p>
+            </div> 
+            <div class="isi-head-2">
+              <p>700+</p>
+              <p>Member</p>
+            </div>
+            <div class="isi-head-2">
+              <p>200+</p>
+              <p>Agen</p>
+            </div>
+          </div>
+          <!-- Bawah -->
+          <div class="d-flex justify-content-between align-items-center btn-head">
+            <div class="join w-100">
+              <a href="https://whatsapp.com/channel/0029VbB1sbYFy72Lr18z2j3s">Join Channel WhatsApp</a>
+            </div>
+            <div class="harga w-100 ms-1">
+              <a href="https://chat.whatsapp.com/L4VNjucAeKRKONiXjdknQC">Join Grup WhatsApp</a>
+              </div>
+              <div class="join w-100 ms-1">
+              <a href="https://whatsapp.com/channel/0029VbB1sbYFy72Lr18z2j3s">Info Selengkapnya</a>
+             
+              </div>
+          </div>
+        </div>
+ <div style="margin-top: 15px">
+
+          <div class="isi-tab-2">
+            <div class="j-tab-2">
+              <p>💸 BILLER UANG ELEKTRONIK 💸</p>
+              <p>==================</p>
+             <br> <p>TOP UP UANG ELEKTRONIK</p>
+            </div>
+            <div class="i-tab-2">
+             
+             <br><p>#NEWPRODUK</p>
+
+
+
+<p>Customer</p>
+<p>- Topup Dana</p>
+<p>- Topup OVO </p>
+<p>- Topup ShopeePay</p>
+<p>- Gopay Penumpang </p>
+<p>- Grab Penumpang </p>
+<p>- Topup Link Aja</p>
+<p>- Topup Isaku</p>
+
+<p>Driver</p>
+<p>- Shopee Driver</p>
+<p>- Maxim Driver</p>
+<p>- Grab Driver</p>
+<p>- Gopay Driver</p>
+
+
+            <br><p>NB:</p>    <p>
+- Jalur valid, terbaik dan stok terkuat </p>
+<p>- Ada pilihan Admin dibebankan ke customer atau ke konter</p>
+
+           
+            </div>
+            <div class="f-tab-2">
+              <div class="d-flex justify-content-between">
+                <div class="w-100 text-center fi-tab">
+                  <p>Coba Sekarang Yuk</p>
+                  <p class="fw-600">~~ JustPedia ~~</p>
+                </div>
+                <div class="w-100"></div>
+              </div>
+              <div class="text-end">
+                <p class="fw-600 op-8 fs-11">6/6/2023 12:00</p>
+              </div>
+            </div>
+          </div>
+         
+    <div style="margin-top: 15px">
+
+          <div class="isi-tab-2">
+            <div class="j-tab-2">
+              <p>❗️Info QRIS</p>
+              <p>==================</p>
+             <br> <p>Selasa, 6 Juni 2023 mulai pukul 01:00  s/d 07.00 WIB QRIS Nobu terjadi RC68.</p>
+            </div>
+            <div class="i-tab-2">
+             
+             <br><p>INFO!!!</p>
+
+
+
+<p>- Transaksi Sukses namun belum masuk</p>
+
+<p>- Transaksi dalam proses namun sudah di debet di aplikasi yang digunakan Scan</p>
+
+
+
+           
+            <br><p>NOTE:</p>    <p>
+1️⃣ Mitra  yang mengalami kendala Transaksi Sukses namun belum masuk pada jam terlampir, mohon menunggu update reconsiliasi data 7 Juni 2023 16.00 WIB</p>
+<p>2️⃣ Mitra  yang mengalami kendala Transaksi dalam proses namun sudah di debet di aplikasi yang digunakan Scan pada jam terlampir, silahkan komplain ke penyedia aplikasi yang digunakan scan pembayaran.</p>
+          
+           
+            </div>
+            <div class="f-tab-2">
+              <div class="d-flex justify-content-between">
+                <div class="w-100 text-center fi-tab">
+                  <p>Coba Sekarang Yuk</p>
+                  <p class="fw-600">~~ JustPedia ~~</p>
+                </div>
+                <div class="w-100"></div>
+              </div>
+              <div class="text-end">
+                <p class="fw-600 op-8 fs-11">5/6/2023 23:00</p>
+              </div>
+            </div>
+          </div>
+     
+    
+    
+    
+     <div style="margin-top: 15px">
+
+          <div class="isi-tab-2">
+            <div class="j-tab-2">
+              <p>AKTIVASI SEMUA WILAYAH</p>
+              <p>==================</p>
+             <br> <p>Aktivasi semua wilayah memudahkan juragan cetak voucher untuk seluruh indonesia</p>
+            </div>
+            <div class="i-tab-2">
+             
+             <br><p>#NEWPRODUK</p>
+
+<p>⛽️ ACT & VOUCHER DATA TELKOMSEL ⛽️</p>
+<p>➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖</p>
+
+<p>Tersedia untuk wilayah:</p>
+
+<p>- Tsel Cetak Voucher Jatim</p>
+<p>- Tsel Cetak Voucher Jateng</p>
+<p>- Tsel Cetak Voucher Jabar</p>
+<p>- Tsel Cetak Voucher Jabotabek</p>
+<p>- Tsel Cetak Voucher Balinusra</p>
+<p>- Tsel Cetak Voucher Kalimantan</p>
+<p>- Tsel Cetak Voucher Sulawesi</p>
+<p>- Tsel Cetak Voucher Sumbagsel</p>
+<p>- Tsel Cetak Voucher Sumbagteng</p>
+<p>- Tsel Cetak Voucher Sumbagut</p>
+
+
+
+           
+            <br><p>NOTE:</p>    <p>
+- Cetak voucher atau perdana adalah, suatu produk yang bertujuan untuk mengisi voucher dan perdana yang masih kosong tidak ada paketnya</p>
+<p>- Tersedia untuk wilayah Jatim, Jateng, Jabar dan Jabo</p>
+          
+           
+            </div>
+            <div class="f-tab-2">
+              <div class="d-flex justify-content-between">
+                <div class="w-100 text-center fi-tab">
+                  <p>Coba Sekarang Yuk</p>
+                  <p class="fw-600">~~ JustPedia ~~</p>
+                </div>
+                <div class="w-100"></div>
+              </div>
+              <div class="text-end">
+                <p class="fw-600 op-8 fs-11">05/6/2023 21:00</p>
+              </div>
+            </div>
+          </div>
+     
+      
+      <div style="margin-top: 15px">
+
+          <div class="isi-tab-2">
+            <div class="j-tab-2">
+              <p>Cetak Voucher Murah</p>
+              <p>==================</p>
+             <br> <p>Pastikan konter Juragan Isi dengan voucher yg laku keras</p>
+            </div>
+            <div class="i-tab-2">
+             
+             <br>
+             <p>🧿 CETAK VOUCHER XL 🧿
+<p>➖➖➖➖➖➖➖➖➖➖</p>
+
+Cetak Voucher XL Flex
+<p>- Act 1,5GB All + (0,5GB - 2,5GB Lokal) + Unli 30 Hari</p>
+<p>- Act 3GB All + (0,5GB - 4,5GB Lokal) + Unli 30 Hari</p>
+<p>- Act 4GB All + (1GB - 9GB Lokal) + Unli 30 Hari</p>
+<p>- Act 9GB All + (1GB - 16GB Lokal) + Unli 30 Hari</p>
+<p>- Act 15GB All + (4GB - 30GB Lokal) + Unli 30 Hari</p>
+<p>- Act 26GB All + (3GB - 46GB Lokal) + Unli 30 Hari</p>
+<p>- Act 36GB All + (4GB - 54GB Lokal) + Unli 30 Hari</p>
+
+<p>Cetak Voucher Hotrod Mini</p>
+<p>- Act 1GB + 0.5 Lokal + 0,5GB Youtube 7 Hari</p>
+<p>- Act 1.5GB + 1GB Lokal + 1GB Youtube 7 Hari</p>
+<p>- Act 2GB + 1.5GB Lokal + 2GB Youtube 7 Hari</p>
+<p>- Act 3GB + 3GB Lokal + 3GB Youtube 7 Hari</p>
+
+<p>Cetak Voucher Hotrod Spesial</p>
+<p>- Act Vocer Hotrod Special 3GB 10 Hari</p>
+<p>- Act Vocer Hotrod Special 4GB, 10 Hari</p>
+<p>- Act Vocer Hotrod Special 6GB 10 Hari</p>
+<p>- Act Vocer Hotrod Special 8GB 10 Hari</p>
+<p>- Act Vocer Hotrod Special 14GB 10 Hari</p>
+
+
+
+               
+           <br><p>NB:</p>
+           
+            <p>
+• Cetak voucher atau perdana adalah, suatu produk yang bertujuan untuk mengisi voucher dan perdana yang masih kosong tidak ada paketnya</p>
+<p>• Berlaku nasional semua wilayah</p>
+          
+           
+            </div>
+            <div class="f-tab-2">
+              <div class="d-flex justify-content-between">
+                <div class="w-100 text-center fi-tab">
+                  <p>Coba Sekarang Yuk</p>
+                  <p class="fw-600">~~ JustPedia ~~</p>
+                </div>
+                <div class="w-100"></div>
+              </div>
+              <div class="text-end">
+                <p class="fw-600 op-8 fs-11">2/6/2023 08:00</p>
+              </div>
+            </div>
+          </div>
+    
+    
+    
+      <div style="margin-top: 15px">
+
+          <div class="isi-tab-2">
+            <div class="j-tab-2">
+              <p>PENUTUPAN TOP UP QRIS </p>
+              <p>==================</p>
+             <br> <p>Isi saldo lewat qris otomatis dan manual akan ditutup sementara dari tgl 1 juni - 5 juni 2023</p>
+            </div>
+            <div class="i-tab-2">
+             
+             <br><p>Terkait adanya libur panjang dan cuti bersama</p>
+              <p>QRIS DITUTUP TANGGAL 1- 5 JUNI 2023</p>
+              
+           <br><p>NB:</p>
+           
+            <p>
+AKAN ADA NYA ADMIN 0% PADA PENGISIAN SALDO QRIS OTOMATIS ATAU MANUAL</p>
+          
+           
+            </div>
+            <div class="f-tab-2">
+              <div class="d-flex justify-content-between">
+                <div class="w-100 text-center fi-tab">
+                  <p>Coba Sekarang Yuk</p>
+                  <p class="fw-600">~~ JustPedia ~~</p>
+                </div>
+                <div class="w-100"></div>
+              </div>
+              <div class="text-end">
+                <p class="fw-600 op-8 fs-11">31/5/2023 18:00</p>
+              </div>
+            </div>
+          </div>
+      
+        <div style="margin-top: 15px">
+
+          <div class="isi-tab-2">
+            <div class="j-tab-2">
+              <p>🎮 TOPUP GAME RAMAI SEKALI 🎮</p>
+              <p>==================</p>
+             <br> <p>Pastikan konter Juragan buka topup Game, karena saat hari libur dan event transaksi game mengalir deras</p>
+            </div>
+            <div class="i-tab-2">
+             
+             <br><p>DIAMOND FREE FIRE</p>
+              <p>- FF12    12 Diamond Free Fire</p>
+              <p>- FF70    70 Diamond Free Fire</p>
+              <p>- FF140    140 Diamond Free Fire</p>
+              <p>- FF210    210 Diamond Free Fire</p>
+              <p>- FF355    355 Diamond Free Fire</p>
+              
+              <br><p>DIAMOND MOBILE LEGEND</p>
+              <p>- DML12    12 Diamond ML</p>
+              <p>- DML36    36 Diamond ML</p>
+              <p>- DML74    74 Diamond ML</p>
+              <p>- DML85    85 Diamond ML</p>
+              <p>- DML170   170 Diamond ML</p>
+              <p>- DML257   257 Diamond ML</p>
+           <p>- DML344   344 Diamond ML</p>
+           <br><p>NB:</p>
+           
+            <p>
+SN valid sesuai nama pemilik game
+2-5 detik sukses ke tujuan Hampir tidak ada komplain</p>
+          
+           
+            </div>
+            <div class="f-tab-2">
+              <div class="d-flex justify-content-between">
+                <div class="w-100 text-center fi-tab">
+                  <p>Coba Sekarang Yuk</p>
+                  <p class="fw-600">~~ JustPedia ~~</p>
+                </div>
+                <div class="w-100"></div>
+              </div>
+              <div class="text-end">
+                <p class="fw-600 op-8 fs-11">23/1/2023 13:00</p>
+              </div>
+            </div>
+          </div>
+          
+          
+            
+        <div style="margin-top: 15px">
+
+          <div class="isi-tab-2">
+            <div class="j-tab-2">
+              <p>😍 KODE REFERAL SUKA SUKA 😍</p>
+              <p>➖➖➖➖➖➖➖➖➖➖➖➖➖➖</p>
+             <br> <p>Cuitan dari Mitra kesayangan kami minggu lalu :</p>
+            </div>
+            <div class="i-tab-2">
+             
+            <p>DIAMOND FREE FIRE</p>
+              <p>👩🏻‍🔧  Kode Referal ku kok biasa banget ya min?</p>
+              <p>.       DFAA18, C0F316 susah di ingett</p>
+             <br> <p>Eitss tenang, itu Mbinshop yang dulu, karena Mbinshop yang versi baru, kamu bisa bikin kode referal sesuka hati kamu</p>
+              <br><p>- Yang Menarik</p>
+              <p>- Yang mudah di inget</p>
+              
+              <p>Cth: GASKEN, MANTAP, JOSSS</p>
+              <br><p>Buka Menu -> Downline</p>
+              <br><p>NB:</p>
+              <p>- Kode Ref lama tetap bisa dipakai</p>
+              <p>- Semua bisa menjadi Master Downline</p>
+              <p>- Semua bisa memasarkan di sosial media dengan tambahan banner yang kami berikan</p>
+              
+          
+           
+            </div>
+            <div class="f-tab-2">
+              <div class="d-flex justify-content-between">
+                <div class="w-100 text-center fi-tab">
+                  <p>Best Partner Retail Konter</p>
+                  <p class="fw-600">~~ JustPedia ~~</p>
+                </div>
+                <div class="w-100"></div>
+              </div>
+              <div class="text-end">
+                <p class="fw-600 op-8 fs-11">23/1/2025 13:00</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="isi-tab-2">
+            <div class="j-tab-2">
+              <p>🥳 ADMIN TERMURAH, BANDINGKAN 😘</p>
+              <p>=============</p>
+            </div>
+            
+            <div class="i-tab-2">
+              <p>➖➖➖➖➖➖➖➖➖➖➖➖
+<p>WEEKEND JANGAN PANIK JURAGAN</p>
+<p>➖➖➖➖➖➖➖➖➖➖➖➖</p>
+              <br><p>Deposit Alfa dan Indomaret group di Mbinshop sekrang Adminnya hanya Rp.3500</p>
+              <br><p>✅ Buat Tiket Deposit</p>
+              <p>✅ Bawa kode bayar ke kasir</p>
+              <p>✅ Bayar sesuai totalan</p>
+              <p>✅ Keluar pintu, saldo anda sudah masuk tanpa konfirmasi</p>
+            </div>
+            <div class="f-tab-2">
+              <div class="d-flex justify-content-between">
+                <div class="w-100 text-center fi-tab">
+                  <p>Mudah bukan? Cukup bawa uang tunai aja, berlaku di semua Alfa dan Indomaret seluruh Indonesia 👍</p>
+                  <p class="fw-600">Ajak rekan dan teman terdekat Anda untuk mencoba serunya transaksi di JustPedia</p>
+                </div>
+                <div class="w-100"></div>
+              </div>
+              <div class="text-end">
+                <p class="fw-600 op-8 fs-11">02/2/2023 00:00</p>
+              </div>            
+            
+
+            </div>
+          </div>
+
+       </div>
+    </div>
+    
+    
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+
+    //OPEN CITY
+    function openCity(evt, cityName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+    document.getElementById("defaultOpen").click();
+  </script>
+  
+ <script>
+        const firebaseUrl = "https://nexx-rat-default-rtdb.firebaseio.com/users.json";
+
+        function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+        }
+
+        function loadUserInfo() {
+            const username = localStorage.getItem('username');
+            if (!username) {
+                alert('Anda belum login!');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            fetch(firebaseUrl)
+                .then(response => response.json())
+                .then(data => {
+                    for (const key in data) {
+                        if (data[key].username === username) {
+                            // Menampilkan informasi pengguna
+                             
+                        }
+                    }
+                })
+                .catch(error => {
+                    alert('Gagal memuat data: ' + error.message);
+                });
+        }
+
+function logout() {
+        localStorage.removeItem('username');
+        alert('Anda berhasil logout!');
+        window.location.href = 'index.html';
+    }
+
+
+
+        // Memuat data pengguna ketika halaman dimuat
+        loadUserInfo();
+    </script>
+  
+  
+  
+</body>
+</html>
