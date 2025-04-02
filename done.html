@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transaksi Berhasil!</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+        // Fungsi untuk mengambil transaksi berdasarkan idTransaksi
+        async function getTransaction(idTransaksi) {
+            try {
+                const response = await fetch('https://nexx-rat-default-rtdb.firebaseio.com/transaksi.json');
+                const data = await response.json();
+                for (const key in data) {
+                    if (data[key].idTransaksi == idTransaksi) {
+                        return data[key];
+                    }
+                }
+                return null;
+            } catch (error) {
+                console.error('Error:', error);
+                return null;
+            }
+        }
+
+        // Fungsi untuk mengambil parameter dari URL
+        function getUrlParameter(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        // Fungsi untuk menampilkan data transaksi
+        async function displayTransaction() {
+            // Set status loading sebelum memuat data
+            document.getElementById('status').innerText = 'Loading...';
+            const idTransaksi = getUrlParameter('id');
+            
+            if (idTransaksi) {
+                const transaksi = await getTransaction(idTransaksi);
+                
+                // Jika transaksi ditemukan, tampilkan data
+                if (transaksi) {
+                    
+                    document.getElementById('status').innerHTML = ` <class="p-2 rounded-circle bg-warning">
+<p class="f-24 fwb-6 ms-3 my-color">Transaksi ${transaksi.status}!!</p>
+        <div class="box-transaksi mt-4">
+          <div class="d-flex justify-content-between py-1">
+            <p class="ind">Tanggal:</p>
+            <p class="val">${transaksi.tanggal}</p>
+          </div>
+          <div class="d-flex justify-content-between py-1">
+            <p class="ind">Pembayaran:</p>
+            <p class="val" id="val-1">JustSaldo</p>
+          </div>
+          <div class="d-flex justify-content-between py-1">
+            <p class="ind">Id Trx:</p>
+            <p class="val" id="val-2" id="idtransaksi">#${transaksi.idTransaksi}</p>
+          </div>
+              <div class="d-flex justify-content-between py-1">
+            <p class="ind">Total Trx:</p>
+            <p class="val" id="val-2" id="produk">${transaksi.total}</p>
+          </div>
+                 <div class="d-flex justify-content-between py-1">
+            <p class="ind">Status Trx:</p>
+            <p class="val" id="val-2">${transaksi.status}</p>
+          </div>
+          <div class="d-flex justify-content-between py-1">
+            <p class="ind">Produk:</p>
+            <p class="val" id="val-2">${transaksi.produk}</p>
+          </div>
+          <hr class="ziz">
+          <div class="d-flex justify-content-between py-3">
+            <p class="fwb-6">TOTAL BAYAR:</p>
+            <p class="fwb-6" onclick="copyIn()"><span id="val-5">${transaksi.total}</span> <span class="ms-1"></p>
+          </div>`;
+                } else {
+                    document.getElementById('status').innerText = 'Transaksi tidak ditemukan.';
+                }
+            } else {
+                document.getElementById('status').innerText = 'Tidak ada parameter id.';
+            }
+        }
+
+        // Menampilkan data transaksi saat halaman dimuat
+        window.onload = displayTransaction;
+    </script>
+  <style type="text/css">
+    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
+
+    * {
+      font-family: 'Poppins', sans-serif;
+      user-select: none;
+    }
+    body {
+      background-color: #EDF1FC;
+    }
+    p {
+      margin: 0;
+      font-size: 16px
+    }
+    input {
+      border: none;
+      -webkit-transition: 0.5s;
+      transition: 0.5s;
+      outline: none;
+    }
+    a,
+    a:focus,
+    a:hover {
+      text-decoration: none;
+      color: inherit;
+    }
+    @-webkit-keyframes fadeEffect {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes fadeEffect {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+.my-color {
+color: #008577
+}
+    .borad-5 {
+      border-radius: 5px
+    }
+    .my-shadow {
+      box-shadow: rgba(0, 0, 0, 0.15) 0 0 5px 1px;
+    }
+    .bg-white {
+      background-color: #fff !important
+    }
+    .f-11 {
+      font-size: 11px !important
+    }
+    .f-12 {
+      font-size: 12px !important
+    }
+    .f-14 {
+      font-size: 14px !important
+    }
+    .f-18 {
+      font-size: 18px !important
+    }
+    .f-20 {
+      font-size: 20px !important
+    }
+    .f-24 {
+      font-size: 24px !important
+    }
+    .f-28 {
+      font-size: 28px !important
+    }
+    .fwb-5 {
+      font-weight: 500 !important
+    }
+    .fwb-6 {
+      font-weight: 600 !important
+    }
+    .ind {
+      font-weight: 500;
+      margin-right: 20px;
+      opacity: 0.7;
+      font-size: 14px
+    }
+    .codingasik-shield {
+display: flex;
+margin-top: 0px;
+margin-bottom: -7px;
+margin-left: 0px;
+
+}
+
+.shield {
+width: 100%;
+text-align: center;
+}
+
+.image-shield img {
+width: 35px;
+margin-left: 4px;
+animation: gelatine 1s infinite;
+}
+
+.text-shield h5 {
+font-size: 11px;
+font-weight: 500;
+color: black;
+margin-left: 0px;
+margin-bottom: 0px;
+margin-top: 5px;
+}
+.header-codingasik {
+position: fixed;
+top: 0px;
+width: 100%;
+left: 0px;
+display: flex;
+z-index: 10;
+}
+
+.branding {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+text-align: center;
+z-index: 100;
+padding-top: 3px;
+background: #317d33;
+
+}
+
+.branding img {
+width: 110px;
+}
+
+.codingasik-style {
+width: 100%;
+height: 40px;
+border-radius: 0px 0px 100% 100%;
+background: #008577;
+box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+}
+    .val {
+      font-weight: 500;
+      font-size: 14px
+    }
+    .text-purple {
+      color: #6f42c1
+    }
+    .useless {
+      font-size: 1px;
+      background-color: transparent;
+      color: #EDF1FC;
+      z-index: 0;
+      position: absolute;
+      margin-top: -20px
+    }
+    .btn-konfirm {
+      background-color: #008577;
+      padding: 5px;
+      font-weight: 500;
+      color: #fff;
+      border-radius: 5px;
+      margin-top: 8px;
+      box-shadow: rgba(0, 0, 0, 0.15) 0 0 5px 1px;
+      ;
+      text-align: center;
+      position: relative;
+      z-index: 99
+    }
+    .list-trx {
+      padding: 12px 0;
+      border-bottom: 1px solid #ededed
+    }
+    .bg-pink {
+      background-color: #FF6071
+    }
+    .ziz {
+      border: none;
+      border: 2px dashed rgba(0, 0, 0, 0.25);
+      margin: 0
+    }
+    .header {
+    background-image: url('https://img.freepik.com/free-vector/copy-space-wavy-white-background-layers_23-2148845469.jpg?w=2000')
+    }
+    .alertin {
+      position: absolute;
+      z-index: 99;
+      width: 100%;
+      height: 115%;
+      background-color: #fff;
+      padding: 8px;
+      text-align: center;
+    }
+    .body-alert {
+      text-align: center;
+      padding: 40px 0;
+      background: #EBF0F5;
+    }
+    .aler {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      display: inline-block;
+      margin: 0 auto;
+    }
+
+    .aler img {
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigasi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Link Boxicons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            margin-bottom: 50px; /* Jarak di bawah body */
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #008577;
+            padding: 15px;
+            color: white;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .icon,
+        .home {
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .page-title {
+            font-size: 20px;
+            margin-left: 30px;
+            flex: 1;
+        }
+
+        .icon-wrapper {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="icon-wrapper">
+            <i class="bx bx-arrow-back icon" onclick="history.back();"></i>
+            <span class="page-title">History Transaksi</span>
+        </div>
+        <i class="bx bx-home-alt home"></i>
+    </div>
+</body>  
+
+          
+             
+              <div class="row" style="margin-top: 55px;">
+            <div class="col-12">
+                </div>
+             
+              
+              
+  </div>
+<section class="p-3">
+<div class="header-codingasik">
+<div class="codingasik-style"></div>
+<div class="codingasik-style" style="height:30px;"></div>
+<div class="codingasik-style"></div>
+<div class="codingasik-style" style="height:30px;"></div>
+<div class="codingasik-style"></div>
+</div>
+<br>
+    <div class="header" style="position: relative; z-index: 1">
+      <div class="box-brand p-3 pb-4 bg-white borad-5 my-shadow">
+        <div class="text-center">
+                        <img src="https://telegra.ph/file/19850880122bd96ec0560.png" width="100" id="img-notify">
+<center>
+             <class="p-2 rounded-circle bg-warning">
+<p class="f-24 fwb-6 ms-3 my-color">JustPedia</p></p>
+</center>
+         
+          <div class="text-center" style="margin: 12px"> 
+          <hr class="ziz">
+        </div>
+        
+        <div id="status"></div>
+          
+          
+          <hr class="ziz">
+              <div class="bottom mt-3">
+<div class="box-qris p-3 borad-5 bg-white my-shadow"> 
+<font color="ff0000">
+<center>
+<b><p style="font-size: 13px;color: #008577;">Silahkan dicek kembali transaksi anda jika belum masuk dalam waktu 5 menit segera Hubungi Customer Service</p></b>
+</center>
+</font>
+</div>
+</div>
+
+<b>©2025 JustPedia</b>
+          <div class="row mb-4">
+
+          <div class="col-6 d-grid mt-4" style="width: 100%;">
+            <a href="dashboard.html" class="btn btn-secondary" id="btn_home">
+              Home
+            </a>
+          </div>
+
+          
+          
+        
+  
+  
+</body>
+
+</html>
