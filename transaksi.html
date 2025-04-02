@@ -1,144 +1,324 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kirim Saldo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Riwayat Transaksi</title>
+    <!-- Link ke Bootstrap 5 dan Poppins font -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fa;
+            background-color: #f4f4f4;
+            padding: 20px;
         }
-        .card {
-            margin: 50px auto;
-            max-width: 400px;
+
+        .container {
+            margin-top: 20px;
         }
-        .btn-primary {
-            background-color: #009579;
-            border-color: #009579;
+
+        .transaction-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .transaction-card-header {
+            font-weight: 600;
+            font-size: 18px;
+            color: #333;
+            margin-left: 60px; /* Untuk memberi ruang untuk logo */
+        }
+        
+        .transaction-card-header2 {
+            font-weight: 600;
+            font-size: 12px;
+            color: #666666;
+            margin-left: 60px; /* Untuk memberi ruang untuk logo */
+        }
+
+        .transaction-card-body {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .transaction-status {
+            font-weight: 600;
+            color: #28a745;
+        }
+
+        .transaction-status.failed {
+            color: #dc3545;
+        }
+
+        .no-transactions {
+            text-align: center;
+            color: red;
+            font-weight: 600;
+        }
+
+        .logo {
+            width: 50px; /* Ukuran logo */
+            height: auto;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+        }
+    </style>
+</head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigasi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Link Boxicons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            margin-bottom: 50px; /* Jarak di bawah body */
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #008577;
+            padding: 15px;
+            color: white;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .icon,
+        .home {
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .page-title {
+            font-size: 20px;
+            margin-left: 10px;
+            flex: 1;
+        }
+
+        .icon-wrapper {
+            display: flex;
+            align-items: center;
         }
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <div class="icon-wrapper">
+            <span class="page-title">Transaksi</span>
+        </div>
+
+    </div>
+</body>    
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        padding-bottom: 60px; /* Memberikan ruang agar konten tidak tertutup */
+    }
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #f8f9fa;
+        border-top: 1px solid #ddd;
+        z-index: 1000;
+        height: 60px;
+    }
+    .bottom-nav .nav-item {
+        width: 20%;
+    }
+    .bottom-nav .nav-link {
+        color: #555;
+        text-align: center;
+        padding: 5px 0;
+        font-size: 12px;
+    }
+    .bottom-nav .nav-link:hover, 
+    .bottom-nav .nav-link.active {
+        color: #008080;
+    }
+    .bottom-nav img {
+        height: 28px;
+    }
+    .nav-text {
+        margin: 0;
+        font-size: 15px;
+    }
+</style>
+
+<body>
+    <nav class="bottom-nav">
+        <div class="nav d-flex justify-content-around">
+            <a href="dashboard.html" class="nav-link">
+                <img src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png" alt="Home">
+                <p class="nav-text">Home</p>
+            </a>
+            <a href="transaksi.html" class="nav-link active">
+                <img src="https://cdn-icons-png.flaticon.com/128/6340/6340511.png" alt="Transaksi">
+                <p class="nav-text">Transaksi</p>
+            </a>
+            <a href="info.html" class="nav-link">
+                <img src="https://cdn-icons-png.flaticon.com/128/8/8201.png" alt="Informasi">
+                <p class="nav-text">Informasi</p>
+            </a>
+            <a href="akun.html" class="nav-link">
+                <img src="https://cdn-icons-png.flaticon.com/128/7542/7542244.png" alt="Akun">
+                <p class="nav-text">Akun</p>
+            </a>
+        </div>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+<body style="margin-top: 50px;">
+
     <div class="container">
-        <div class="card shadow">
-            <div class="card-body">
-                <h5 class="card-title">Kirim Saldo</h5>
-                <div class="mb-3">
-                    <label for="phone" class="form-label">Nomor Telepon</label>
-                    <input type="text" id="phone" class="form-control" placeholder="Masukkan Nomor Telepon">
-                </div>
-                <div class="mb-3">
-                    <label for="total" class="form-label">Jumlah Saldo</label>
-                    <input type="number" id="total" class="form-control" placeholder="Masukkan Jumlah Saldo">
-                </div>
-                <button class="btn btn-primary w-100" onclick="kirimSaldo()">Kirim</button>
-            </div>
+              <div class="no-transactions">
+         History Transaksi Otomatis Hilang Dalam 3 Hari
+        </div>
+        <div id="transactions">
+    <div id="transaksiContainer"></div>
+        <div class="no-transactions" id="noTransactions" style="display:none;">
+            Belum ada transaksi.
         </div>
     </div>
 
     <script>
-        // Cek sesi login
-        const username = localStorage.getItem('username');
-        if (!username) {
-            alert('Anda belum login!');
-            window.location.href = 'login.html';
-        } else {
-            console.log('Selamat datang, ' + username);
+        // Cek jika tidak ada transaksi
+        const transactions = document.getElementById('transactions').children;
+        if (transactions.length === 0) {
+            document.getElementById('noTransactions').style.display = 'block';
         }
+    </script>
 
-        const firebaseUrl = "https://nexx-rat-default-rtdb.firebaseio.com/users.json";
+    <!-- Link ke Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+    <script>
+        const userUrl = "https://nexx-rat-default-rtdb.firebaseio.com/users.json";
         const transaksiUrl = "https://nexx-rat-default-rtdb.firebaseio.com/transaksi.json";
 
-        function generateTransactionId() {
-            const date = new Date();
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            const hour = String(date.getHours()).padStart(2, '0');
-            const randomStr = Math.random().toString(36).substring(2, 14).toUpperCase();
-            return `${year}${month}${day}${hour}${randomStr}`;
+function formatRupiah(number) {
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+    }
+
+        // Fungsi untuk mengambil username dari local storage
+        function getUsername() {
+            return localStorage.getItem("username");
         }
 
-        function kirimSaldo() {
-            const phone = document.getElementById('phone').value;
-            const total = parseInt(document.getElementById('total').value);
+        // Fungsi untuk mengambil ID pengguna berdasarkan username
+        async function getUserId() {
+            const username = getUsername();
+            if (!username) {
+                alert("Anda belum login!");
+                window.location.href = "index.html";
+                return null;
+            }
 
-            if (isNaN(total) || total <= 0) {
-                alert('Masukkan jumlah saldo yang benar!');
+            try {
+                const response = await fetch(userUrl);
+                const data = await response.json();
+                for (const key in data) {
+                    if (data[key].username === username) {
+                        return key;
+                    }
+                }
+                alert("User tidak ditemukan!");
+                return null;
+            } catch (error) {
+                alert("Gagal memuat data pengguna: " + error.message);
+                return null;
+            }
+        }
+
+        // Fungsi untuk mengambil data transaksi dari Firebase
+        async function getTransactions() {
+            try {
+                const response = await fetch(transaksiUrl);
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error("Error:", error);
+                return null;
+            }
+        }
+
+        // Fungsi untuk menampilkan data transaksi
+        async function displayHistory() {
+            const idUser = await getUserId();
+            const transaksiContainer = document.getElementById("transaksiContainer");
+            transaksiContainer.innerHTML = "<h1>Loading...</h1>";
+
+            if (!idUser) return;
+
+            const transaksiData = await getTransactions();
+
+            if (!transaksiData) {
+                transaksiContainer.innerHTML = "<h1>Gagal memuat data transaksi.</h1>";
                 return;
             }
 
-            fetch(firebaseUrl)
-                .then(response => response.json())
-                .then(data => {
-                    let found = false;
-                    for (const key in data) {
-                        if (data[key].username === username) {
-                            const saldoUser = data[key].saldo;
-                            if (saldoUser < total) {
-                                alert('Saldo Anda tidak mencukupi!');
-                                return;
-                            }
+            const filteredTransactions = [];
+            for (const key in transaksiData) {
+                if (transaksiData[key].idPembeli === idUser) {
+                    filteredTransactions.push(transaksiData[key]);
+                }
+            }
 
-                            for (const targetKey in data) {
-                                if (data[targetKey].phone === phone) {
-                                    found = true;
-                                    const saldoTarget = data[targetKey].saldo;
-                                    const newSaldoUser = saldoUser - total;
-                                    const newSaldoTarget = saldoTarget + total;
-                                    const transactionId = generateTransactionId();
-                                    const tanggal = new Date().toLocaleString('id-ID');
+            if (filteredTransactions.length === 0) {
+                transaksiContainer.innerHTML = "<h1>Tidak ada transaksi.</h1>";
+                return;
+            }
 
-                                    // Update saldo pengirim
-                                    fetch(`https://nexx-rat-default-rtdb.firebaseio.com/users/${key}.json`, {
-                                        method: 'PATCH',
-                                        headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({ saldo: newSaldoUser })
-                                    });
-
-                                    // Update saldo penerima
-                                    fetch(`https://nexx-rat-default-rtdb.firebaseio.com/users/${targetKey}.json`, {
-                                        method: 'PATCH',
-                                        headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({ saldo: newSaldoTarget })
-                                    });
-
-                                    // Catat transaksi ke Firebase
-                                    const transaksiData = {
-                                        userId: key,
-                                        barang: "kirim saldo",
-                                        total: total,
-                                        tujuan: phone,
-                                        "tujuan total": newSaldoTarget,
-                                        tanggal: tanggal,
-                                        "id transaksi": transactionId,
-                                        status: "berhasil"
-                                    };
-
-                                    fetch(transaksiUrl, {
-                                        method: 'POST',
-                                        headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify(transaksiData)
-                                    });
-
-                                    alert(`Saldo Rp${new Intl.NumberFormat('id-ID').format(total)} berhasil dikirim ke ${phone}`);
-                                    break;
-                                }
-                            }
-
-                            if (!found) {
-                                alert('Nomor telepon tidak ditemukan!');
-                            }
-                            break;
-                        }
-                    }
-                })
-                .catch(error => {
-                    alert('Terjadi kesalahan: ' + error.message);
-                });
+            transaksiContainer.innerHTML = "";
+            filteredTransactions.forEach((transaksi) => {
+                const transaksiElement = document.createElement("div");
+                transaksiElement.innerHTML = `
+            <div class="transaction-card" onclick="window.location.href='done.html?id=${transaksi.IdTransaksi}'">
+                <img src="https://cdn-icons-png.flaticon.com/128/6418/6418336.png" alt="Logo Produk" class="logo">
+                <div class="transaction-card-header">
+                    ${transaksi.produk} 
+                </div>
+                <div class="transaction-card-header2">
+                   Id Trx: #${transaksi.idTransaksi}
+                </div>
+                 <div class="transaction-card-header2">
+                   Total: ${formatRupiah(transaksi.total)}
+                </div>
+                  <div class="transaction-card-header2">
+                   Status: ${transaksi.status}
+                </div>
+        </div>
+                    
+                `;
+                transaksiContainer.appendChild(transaksiElement);
+            });
         }
+        // Muat history transaksi saat halaman dimuat
+        window.onload = displayHistory;
     </script>
-</body>
-</html>
