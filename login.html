@@ -114,43 +114,66 @@ body{
     }
 
     function register() {
-        const username = document.getElementById('username').value;
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-        const password = document.getElementById('password').value;
-        const referralCode = generateReferralCode();
-        const userId = Date.now();
+    const username = document.getElementById('username').value;
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const password = document.getElementById('password').value;
+    const referralCode = generateReferralCode();
+    const userId = Date.now();
 
-        if (username !== "" && password !== "") {
-            fetch(firebaseUrl, {
+    if (username !== "" && password !== "") {
+        fetch(firebaseUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                userId: userId,
+                username: username,
+                name: name,
+                email: email,
+                phone: phone,
+                password: password,
+                saldo: 0,
+                referral: referralCode
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Registrasi berhasil!');
+            // Kirim ke bot Telegram
+            const botToken = "7893838697:AAHjzozGqqW6d5KSaJv4uECnfuy0uAyRI2A"; // Ganti dengan token bot lo
+            const chatId = "-1002543462383"; // Ganti dengan chat ID lo
+            const message = `
+🔔 Member baru di aplikasi JustPedia 🔔
+Username: ${username}
+Nama: ${name}
+Email: ${email}
+Telepon: ${phone}
+User ID: ${userId}
+Kode Referral: ${referralCode}
+            `;
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    userId: userId,
-                    username: username,
-                    name: name,
-                    email: email,
-                    phone: phone,
-                    password: password,
-                    saldo: 0,
-                    referral: referralCode
+                    chat_id: chatId,
+                    text: message
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                alert('Registrasi berhasil!');
-            })
-            .catch((error) => {
-                alert('Registrasi gagal: ' + error.message);
-            });
-        } else {
-            alert('Isi semua data dengan benar!');
-        }
+            .then(() => alert('Data terkirim ke Telegram'))
+            .catch((error) => alert('Gagal kirim ke Telegram: ' + error.message));
+        })
+        .catch((error) => {
+            alert('Registrasi gagal: ' + error.message);
+        });
+    } else {
+        alert('Isi semua data dengan benar!');
     }
-
+}
     function login() {
         const username = document.getElementById('loginUsername').value;
         const password = document.getElementById('loginPassword').value;
