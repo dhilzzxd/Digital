@@ -557,6 +557,7 @@ font-size:17px;
                         for (const key in data) {
                             if (data[key].username === username) {
                                 email = data[key].email;
+                                userId = data[key].userId;
                                 break;
                             }
                         }
@@ -567,9 +568,9 @@ font-size:17px;
                         }
 
                         // Kirim data ke Telegram bot
-                        const chatId = '-1002543462383';  // Ganti dengan chat ID Telegram Anda
-                        const botToken = '7893838697:AAHjzozGqqW6d5KSaJv4uECnfuy0uAyRI2A';  // Ganti dengan token bot Telegram Anda
-                        const messageText = `Hai Admim Member Baru Saja men-Konfirmasi Deposit\n\nTotal: Rp ${jumlah}\nUsername: ${username}\nEmail: ${email}`;
+                        const chatId = '-1002543462383';  
+                        const botToken = '7893838697:AAHjzozGqqW6d5KSaJv4uECnfuy0uAyRI2A';  
+                        const messageText = `Hai Admim Member Baru Saja men-Konfirmasi Deposit\n\nUserId: ${userId}\nTotal: Rp ${jumlah}\nUsername: ${username}\nEmail: ${email}`;
 
                         // Kirim gambar ke bot Telegram
                         const formData = new FormData();
