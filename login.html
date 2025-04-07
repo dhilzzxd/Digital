@@ -112,6 +112,8 @@ body{
         }
         return code;
     }
+        
+      
 
     function register() {
     const username = document.getElementById('username').value;
@@ -120,7 +122,7 @@ body{
     const phone = document.getElementById('phone').value;
     const password = document.getElementById('password').value;
     const referralCode = generateReferralCode();
-    const userId = Date.now();
+    const userId = generateReferralCode();
 
     if (username !== "" && password !== "") {
         fetch(firebaseUrl, {
