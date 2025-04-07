@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="in">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content='#00897B' name='theme-color'/>
+    <meta content='#00897B' name='msapplication-navbutton-color'/>
+    <title>JustPedia</title>
+
+    <link rel="stylesheet" href="https://rawcdn.githack.com/danizevaro/css/3e079dfaeb89fb675aa6d33890837727c3eda5a1/swiper.main.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;500&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+
+    <script>
+        async function fetchData() {
+            try {
+                const responseTransaksi = await fetch('https://nexx-rat-default-rtdb.firebaseio.com/transaksi.json');
+                const transaksiData = await responseTransaksi.json();
+                const responseUsers = await fetch('https://nexx-rat-default-rtdb.firebaseio.com/users.json');
+                const usersData = await responseUsers.json();
+                const responseProduk = await fetch('https://nexx-rat-default-rtdb.firebaseio.com/produk.json');
+                const produkData = await responseProduk.json();let totalSukses = 0;
+            let totalPending = 0;
+            let totalGagal = 0;
+            let totalUsers = Object.keys(usersData).length;
+            let totalProduk = Object.keys(produkData).length;
+            let totalSaldo = 0;
+
+            for (const key in transaksiData) {
+                const transaksi = transaksiData[key];
+                if (transaksi.status === 'Sukses') {
+                    totalSukses += transaksi.total;
+                } else if (transaksi.status === 'Pending') {
+                    totalPending += transaksi.total;
+                } else if (transaksi.status === 'Gagal') {
+                    totalGagal += transaksi.total;
+                }
+            }
+
+            for (const key in usersData) {
+                totalSaldo += usersData[key].saldo || 0;
+            }
+
+            document.getElementById('totalSukses').innerText = 'Total Sukses: ' + totalSukses;
+            document.getElementById('totalPending').innerText = 'Total Pending: ' + totalPending;
+            document.getElementById('totalGagal').innerText = 'Total Gagal: ' + totalGagal;
+            document.getElementById('totalUsers').innerText = 'Total Users: ' + totalUsers;
+            document.getElementById('totalProduk').innerText = 'Total Produk: ' + totalProduk;
+            document.getElementById('totalSaldo').innerText = 'Total Saldo: ' + totalSaldo;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    window.onload = fetchData;
+</script>
+
+
+
+         
+   <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"       integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />          
+   <link rel="stylesheet" href="https://axa.my.id/Bootstrap/Style.css">
+   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+  
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300;0,500;0,700;0,800;0,900;1,300;1,500;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">    
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous"> 
+   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400&display=swap" rel="stylesheet">
+
+    
+ <style>
+:root {
+    --color-main: #00897B;
+    --animate-duration: 300ms;
+       --main: aliceblue;
+      --subMain: #00897B;
+      --subColor: #08e900;
+      --bgIn: #636363;
+      --white: #ffffff;
+      --tabs: #4e4e4e;
+      --borderColor: #636363;
+      --animate-duration: 800ms;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-tap-highlight-color: transparent
+}
+
+body {
+    background: #F6F6F8;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+    #header {
+      background: var(--subMain);
+      height: 120px;
+      width: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: -1;
+      border-radius: 0px 0px 25px 25px;
+    }
+    a{
+      color: black;
+    }
+        .refs button{
+      border: none;
+      background: var(--subMain);
+      color: white;
+      font-size: 11px;
+      border-radius: 100px;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 3px;
+      padding-bottom: 3px;
+    }
+    .info--met{
+      background: white;
+      border-radius: 100px;
+      padding:5px;
+      margin-top: 10px;
+      
+    }
+    .info--met img{
+      width: 18px;
+      margin-right: 10px;
+    }
+    .info--met marquee{
+      font-size: 12px;
+      width: 100%;
+    }
+ 
+    .info--news{
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 40px;
+    position: relative;
+  }
+    .wellcome {
+      color: white;
+      padding: 10px;
+      
+    }
+
+    .wellcome p {
+      margin: 0px;
+      font-size: 13px;
+    }
+
+    .wellcome h5 {
+      font-size: 17px;
+      font-weight: 600;
+      margin: 0px;
+    }
+
+    .temp--box {
+      background: white;
+      padding: 15px;
+      border-radius: 20px;
+      margin-top: -60px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+      position: relative;
+    }
+
+    .temp--box p {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--subMain);
+      margin: 0;
+    }
+
+    .temp--box h5 {
+      font-size: 16px;
+      font-weight: bold;
+      color: black;
+      margin: 0;
+    }
+
+    .like--space {
+      width: 15px;
+      
+    }
+
+    .topup--btn {
+      
+      width: 100%;
+      border-radius: 20px;
+      padding: 13px;
+      background: aliceblue;
+      display: flex;
+      align-items: center;
+    }
+
+    .topup--btn img {
+      width: 35px;
+      margin-right: 10px;
+    }
+
+    .topup--btn h5 {
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .transfer--btn {
+      width: 100%;
+      border-radius: 20px;
+      padding: 13px;
+      background: aliceblue;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .transfer--btn img {
+      width: 35px;
+      margin-right: 10px;
+    }
+
+    .transfer--btn h5 {
+      margin: 0;
+      font-size: 13px;
+    }
+    .transfer--btn span img{
+      width: 15px;
+      position: absolute;
+      top: 20px;
+      right: 5px;
+      filter: invert(38%) sepia(93%) saturate(7006%) hue-rotate(353deg) brightness(84%) contrast(130%);
+    }
+ .codingasik-list{
+   list-style: none;
+   margin: 0;
+   padding:0;
+   display: grid;
+   border: right;
+   grid-template-columns: repeat(4, 1fr);
+   justify-items: center;
+   position: relative;
+   top:5px;
+ }
+    a {
+      text-decoration: none;
+    }
+
+    #textContainer1,
+    #textContainer2 {
+      font-size: 11px;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .mood {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0px;
+      text-align: center;
+      
+    }
+    .page--menu{
+      background: white;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+      margin-top: 10px;
+      border-radius: 20px;
+      padding-bottom: 20px;
+      padding-top: 10px;
+    }
+
+header {
+    padding: 10px 20px 50px;
+    background: var(--color-main);
+    
+}
+
+header .info-user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header .info-user .details {
+    color: white;
+}
+
+header .info-user .details h3 {
+    font-size: 15px;
+}
+
+header .info-user .details p {
+    font-size: 11px;
+}
+
+
+header .info-user .details span {
+    fill: white;
+    display: flex;
+    margin-top: 15px;
+    padding: 5px 9px;
+    column-gap: 10px;
+    align-items: center;
+    border-radius: 7px;
+    border: 1px solid white;
+}
+
+header .info-user .main-refreh {
+    fill: white;
+    color: white;
+    font-size: 11px;
+    font-weight: 400;
+    text-align: center;
+}
+ .button-x{
+   width: auto;
+   margin-left: 2%;
+   margin-right: 2%;
+   background-color: transparent;
+   border: none;
+   height: 40px;
+   margin-bottom: 50px;
+ }
+ .button-x img{
+  width: 58px;
+  padding: 5px;
+  border-radius: 15px;
+  background-color: white;
+}
+.button-x p{
+ width: auto;
+ font-size: 12px;
+ margin-top:2px;
+}
+header .info-user .main-refreh p {
+    margin-top: 5px;
+}
+
+header .detail-user {
+    color: white;
+    margin-top: 30px;
+}
+
+header .detail-user .main-saldo {
+    display: flex;
+    column-gap: 5px;
+    align-items: baseline;
+}
+
+header .detail-user .main-saldo p {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+header .detail-user .main-saldo h3 {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+header .detail-user .btn-detail {
+    display: flex;
+    margin-top: 10px;
+    column-gap: 10px;
+    align-items: center;
+}
+
+header .detail-user .btn-detail button {
+    border: none;
+    
+    display: flex;
+    column-gap: 5px;
+    font-weight: 500;
+    padding: 8px 15px;
+    background: white;
+    align-items: center;
+    border-radius: 30px;
+    color: var(--color-main);
+    fill: var(--color-main);
+}
+
+.card-swipe {
+    display: flex;
+    padding: 10px;
+    overflow-x: auto;
+    column-gap: 15px;
+    align-items: center;
+}
+
+.card-swipe div {
+    flex: 0 0 200px; 
+    background: white;
+    border-radius: 18px;
+}
+
+.card-swipe div div {
+    border: none;
+    padding: 9px;
+    border-radius: 10px;
+    border: 1px dashed var(--color-main);;
+    border-left: 6px solid var(--color-main);
+}
+
+.card-swipe div h6 {
+    font-size: 13px;
+}
+
+.card-swipe div p {
+    color: #858585;
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0.2px;
+}
+
+/* slide swiper */
+.swiper-wrapper,
+.swiper-container {
+    display: flex;
+    padding-bottom: 70px;
+    background: transparent;    
+   
+}
+.axa-box{
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+   text-align: center;
+   width: 100%;
+   background: white;
+   border-radius: 10px;
+   padding: 25px;
+   margin-top: 15px;
+}
+.swiper-slider-center {
+    position: relative;
+    overflow: hidden;
+}
+
+.swiper-menu {
+    margin-top: 100px;
+    padding: 15px 15px;
+    border-radius: 9px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    background: white;
+    border-radius: 18px;
+    margin: -65px 10px 0;
+}
+
+.swiper-slide-menu {
+    display: grid;
+    column-gap: 17px;
+    grid-row-gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.swiper-slide-menu div {
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    border-radius: 17px;
+}
+
+.swiper-slide-menu div img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+}
+
+  	.saldo {
+  		background-color: #fff;
+  		border-radius: 10px;
+  		position: relative;
+  		z-index: 1;
+  		margin-top: 5px;
+  		padding: 10px 0;
+  		box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+
+  	}
+
+.swiper-banner {
+    margin-top: 2px;
+    padding: 10px 10px;
+    border-radius: 9px;
+}
+
+.swiper-slide-banner img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.swiper-slide-banner div {
+    display: flex;
+    color: #737373;
+    font-size: 13px;
+    font-weight: 500;
+    align-items: center;
+}
+
+.swiper-slide-banner div img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.swiper-slider-center .swiper-pagination-bullet {
+    transition: 300ms ease-in-out;
+    background-color: #575757;
+}
+
+.swiper-slider-center .swiper-pagination-bullet-active {
+    border-radius: 8px;
+    background-color: var(--color-main);
+}
+    </style>
+</head>
+
+
+    <!-- MAINTENANCE SISTEM CODINGASIK
+    <script type="text/javascript">
+        //<![CDATA[
+        var h = (new Date()).getHours();
+        var m = (new Date()).getMinutes();
+        var s = (new Date()).getSeconds();
+        if (h >= 1 && h < 10) document.writeln("<div class'blocken' style='display:none;'>codingasik-key-script</div>");
+        if (h >= 10 && h < 15) document.writeln("<div class'blocken' style='display:none;'>codingasik-key-script</div>");
+        if (h >= 23 && h < 24) document.writeln("");
+        if (h >= 23 || h < 1) document.writeln("<div class'blocken' style='color:black; position: fixed;height: 100%;width: 100%;top:0;left: 0;z-index: 10000;text-align:center;background: rgba(0, 0, 0, 0.25);border-radius: 0px;box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);backdrop-filter: blur(0.7px);-webkit-backdrop-filter: blur(0.7px);font-weight:bold;padding:30px;align-item:center;'> <h5 style='margin-top:30%;background:white;font-size:13px;padding:20px;border-radius:10px;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;'><img src='https://tranetech.com/wp-content/uploads/2021/02/app-tranetech.gif' style='width:100%'>Mohon maaf kak {{nama_user}} Saat ini sedang Jadwal maintenance Setiap Hari mulai pukul 23.00 - 01.00 WIB, selama proses maintenance aplikasi tidak dapat diakses, informasi lengkapnya silahkan <br/><br/><a href='#'>Hubungi Admin</a></h5></div>");
+    //]]>
+    </script>
+    MAINTENANCE SISTEM CODINGASIK -->
+
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        padding-bottom: 60px; /* Memberikan ruang agar konten tidak tertutup */
+    }
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #f8f9fa;
+        border-top: 1px solid #ddd;
+        z-index: 1000;
+        height: 60px;
+    }
+    .bottom-nav .nav-item {
+        width: 20%;
+    }
+    .bottom-nav .nav-link {
+        color: #555;
+        text-align: center;
+        padding: 5px 0;
+        font-size: 12px;
+    }
+    .bottom-nav .nav-link:hover, 
+    .bottom-nav .nav-link.active {
+        color: #008080;
+    }
+    .bottom-nav img {
+        height: 28px;
+    }
+    .nav-text {
+        margin: 0;
+        font-size: 15px;
+    }
+</style>
+
+<body>
+    <nav class="bottom-nav">
+        <div class="nav d-flex justify-content-around">
+            <a href="dashboard.html" class="nav-link active">
+                <img src="https://cdn-icons-png.flaticon.com/128/1946/1946488.png" alt="Home">
+                <p class="nav-text">Home</p>
+            </a>
+            <a href="aplikasi.html" class="nav-link">
+                <img src="https://cdn-icons-png.flaticon.com/128/13493/13493312.png" alt="Transaksi">
+                <p class="nav-text">Aplikasi</p>
+            </a>
+            
+        </div>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+ <script>
+        function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+        }async function fetchData() {
+        try {
+            const totalSukses = document.getElementById('totalSukses') || {};
+            const totalPending = document.getElementById('totalPending') || {};
+            const totalGagal = document.getElementById('totalGagal') || {};
+            const totalUsers = document.getElementById('totalUsers') || {};
+            const totalProduk = document.getElementById('totalProduk') || {};
+            const totalSaldo = document.getElementById('totalSaldo') || {};
+
+            const responseTransaksi = await fetch('https://nexx-rat-default-rtdb.firebaseio.com/transaksi.json');
+            const transaksiData = await responseTransaksi.json();
+            const responseUsers = await fetch('https://nexx-rat-default-rtdb.firebaseio.com/users.json');
+            const usersData = await responseUsers.json();
+            const responseProduk = await fetch('https://nexx-rat-default-rtdb.firebaseio.com/produk.json');
+            const produkData = await responseProduk.json();
+
+            let sukses = 0;
+            let pending = 0;
+            let gagal = 0;
+            let users = Object.keys(usersData).length;
+            let produk = Object.keys(produkData).length;
+            let saldo = 0;
+
+            for (const key in transaksiData) {
+                const transaksi = transaksiData[key];
+                if (transaksi.status === 'Sukses') {
+                    sukses += 1;
+                } else if (transaksi.status === 'Pending') {
+                    pending += 1;
+                } else if (transaksi.status === 'Gagal') {
+                    gagal += 1;
+                }
+            }
+
+            for (const key in usersData) {
+                saldo += usersData[key].saldo || 0;
+            }
+
+            if (totalSukses) totalSukses.innerText = sukses + ' Trx';
+            if (totalPending) totalPending.innerText = pending + ' Trx';
+            if (totalGagal) totalGagal.innerText = gagal + ' Trx';
+            if (totalUsers) totalUsers.innerText = users;
+            if (totalProduk) totalProduk.innerText = produk;
+            if (totalSaldo) totalSaldo.innerText = formatRupiah(saldo);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    window.onload = fetchData;
+</script>
+
+
+
+<body>
+    <header>
+        <div class="info-user">
+            <div class="details">
+                <h3>ADMIN JUSTPEDIA</h3>
+            </div>
+            <div class="main-refreh" onclick="window.location.href='https://wa.me/6283199386704'">
+
+                
+            </div>
+        </div>
+
+        </div>
+
+    </header>
+      <div class="container"  style="margin-top: 30px;">
+        
+    <div class="temp--box shadows">
+              <div class="w-100">
+      <p>Data Aplikasi</p>
+     <h5 id="saldo"></h5>
+        </div>
+        <div class="refs">
+    </div>
+    <div id="status-dot"></div>
+    
+<div class="d-flex align-items-center mt-3">
+    <!-- Bawah -->
+    <a href="#" class="topup--btn shaodws">
+        <img src="https://cdn-icons-png.flaticon.com/128/6418/6418336.png" alt="">
+        <div>
+            <h5>Total Saldo Users</h5>
+            <div id="totalSaldo">
+                <h1></h1>
+            </div>
+        </div>
+    </a>
+    <div class="like--space"></div>
+    <a href="#" class="transfer--btn" id="tombolAksi">
+        <img src="https://cdn-icons-png.flaticon.com/128/679/679922.png" alt="">
+        <div>
+            <h5>Produk</h5>
+            <div id="totalProduk"></div>
+        </div>
+    </a>
+    <div class="like--space"></div>
+    <a href="#" class="transfer--btn" id="tombolPromo">
+        <img src="https://cdn-icons-png.flaticon.com/128/166/166258.png" alt="">
+        <div>
+            <h5>Users</h5>
+            <div id="totalUsers"></div>
+        </div>
+    </a>
+</div>
+
+<div class="d-flex align-items-center mt-3" style="margin-top: 10px;">
+    <!-- Bawah -->
+    <a href="#" class="topup--btn shaodws">
+        <img src="https://cdn-icons-png.flaticon.com/128/1136/1136139.png" alt="">
+        <div>
+            <h5>Berhasil</h5>
+            <div id="totalSukses">
+                <h1></h1>
+            </div>
+        </div>
+    </a>
+    <div class="like--space"></div>
+    <a href="#" class="transfer--btn" id="tombolAksi">
+        <img src="https://cdn-icons-png.flaticon.com/128/2972/2972543.png" alt="">
+        <div>
+            <h5>Pending</h5>
+            <div id="totalPending">Aman</div>
+        </div>
+    </a>
+    <div class="like--space"></div>
+    <a href="#" class="transfer--btn" id="tombolPromo">
+        <img src="https://cdn-icons-png.flaticon.com/128/9426/9426995.png" alt="">
+        <div>
+            <h5>Gagal</h5>
+            <div id="totalGagal"></div>
+        </div>
+    </a>
+</div>
+          
+         
+      </div>
+    </div>
+  </div>
+
+<!-- TEXT BERJALAN -->
+<div class="container">
+  <div class="d-flex align-items-center info--met shadows">
+    <img src="https://cdn-icons-png.flaticon.com/128/7261/7261253.png" alt="">
+    <marquee behavior="" direction="">Selamat Datang Di Just Pedia,
+      Transaksi Lancar Yok Langsung Cust Aja
+    </marquee>
+  </div>
+</div>
+    
+    
+                  <!-- slide -->
+
+            <div class="swiper-pagination"></div>
+        </div>
+
+    <section>
+        <div class="swiper-container-menu swiper-slider-center swiper-menu"  style="margin-top: 15px;">
+         <div class="d-flex align-items-center">
+        <div class="w-100">
+      <p>Kelola Aplikasi</p>
+     <h5 id="saldo"></h5>
+        </div>
+        <div class="refs">
+    </div>
+    <div id="status-dot"></div>
+    </div>
+    <div style="width: 100%; height: 1px; background-color: rgba(128, 128, 128, 0.2); margin: 0 auto;"></div>
+          <div class="codingasik-list">
+           <a href="user.html">
+            <button class="button-x">
+              <img src="https://cdn-icons-png.flaticon.com/128/166/166258.png">
+              <p>Users</p>
+            </button>
+          </a>
+          <a href="produk.html">
+            <button class="button-x">
+              <img src="https://cdn-icons-png.flaticon.com/128/679/679922.png">
+              <p>Produk</p>
+            </button>
+          </a>
+          <a href="trx.html">
+            <button class="button-x">
+              <img src="https://cdn-icons-png.flaticon.com/128/1136/1136139.png">
+              <p>Transaksi</p>
+            </button>
+          </a>
+                    <a href="api.html">
+            <button class="button-x">
+              <img src="https://cdn-icons-png.flaticon.com/128/8605/8605634.png">
+              <p>ApiKeys</p>
+            </button>
+          </a>
+</div>
+    </section>
+       <!-- BOX AKHIR -->
+
+    
+    
+    
+    
+    
+    
+    <!-- my function -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" charset="utf-8"></script>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/danizevaro/cdn@main/library/component/offcanvas/main-script.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/scrollreveal"></script>
+    <script>
+const swiperMenu = new Swiper('.swiper-container-menu', {
+    slidesPerView: 1,
+    spaceBetween: 10,
+    slideToClickedSlide: true,
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+    },
+});
+
+const swiperBanner = new Swiper('.swiper-container-banner', {
+    slidesPerView: 1,
+    centeredSlides: true,
+    spaceBetween: 10,
+    slideToClickedSlide: true,
+    autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+    },
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+    },
+});
+
+
+ScrollReveal().reveal('.info-user', {
+    duration: 1200,
+    origin: 'top',
+    distance: '65px',
+    reset: true
+});
+    
+ScrollReveal().reveal('.detail-user', {
+    duration: 1500,
+    origin: 'left',
+    distance: '65px',
+    reset: true
+});
+
+ScrollReveal().reveal('.menu-button', {
+    duration: 1600,
+    origin: 'left',
+    distance: '65px',
+    reset: true
+});
+
+ScrollReveal().reveal('.swiper-banner', {
+    duration: 1600,
+    origin: 'left',
+    distance: '65px',
+    reset: true
+});
+
+ScrollReveal().reveal('.card-swipe', {
+    duration: 1600,
+    origin: 'bottom',
+    distance: '65px',
+    reset: true
+});
+
+const saldo = $('.change-saldo');
+    const changeSaldo = (angka) => {
+        const reverse = angka.toString().split('').reverse().join('');
+        const ribuan = reverse.match(/\d{1,3}/g);
+        return ribuan.join('.').split('').reverse().join('');
+    };
+
+    saldo.each(function() {
+        $(this).text('Rp '+changeSaldo($(this).text()));
+    });
+    
+    
+    
+    </script>
+    <script>
+  var namaPengguna = "{{nama_membership}}"; 
+  function tampilkanPopup() {
+      $("#popup").show();
+  }
+  function tutupPopup() {
+      $("#popup").hide();
+  }
+  function arahkanKeLink() {
+      window.location.href = "https://kobodev.my.id/digital/257003";
+  }
+  $("#tombolAksi").click(function () {
+      if (namaPengguna === "Non Premium") {
+          tampilkanPopup();
+      } else if (namaPengguna === "Premium") {
+          arahkanKeLink();
+      }
+  });
+  $("#tutupPopup").click(tutupPopup);
+</script>
+ 
+  <script>
+    //<![CDATA[
+    var textContainer1 = document.getElementById("textContainer1");
+    var textContainer2 = document.getElementById("textContainer2");
+    var words1 = ["Instan", "Otomatis/Manual", "Aman"];
+    var words2 = ["Qris Merchant","Konfirmasi Manual"];
+    var currentIndex1 = 0;
+    var currentIndex2 = 0;
+
+    function changeText(container, words, currentIndex) {
+      container.innerHTML = words[currentIndex];
+      currentIndex = (currentIndex + 1) % words.length;
+      animateText(container);
+      return currentIndex;
+    }
+
+    function animateText(container) {
+      container.style.opacity = 0;
+
+      setTimeout(function () {
+        container.style.opacity = 1;
+      }, 100);
+    }
+
+    // Initial text change
+    currentIndex1 = changeText(textContainer1, words1, currentIndex1);
+    currentIndex2 = changeText(textContainer2, words2, currentIndex2);
+
+    // Change text every 3 seconds
+    setInterval(function () {
+      currentIndex1 = changeText(textContainer1, words1, currentIndex1);
+      currentIndex2 = changeText(textContainer2, words2, currentIndex2);
+    }, 3000);
+    //]]>
+  </script>
+  <script type="text/javascript">
+    var h = (new Date()).getHours();
+    var m = (new Date()).getMinutes();
+    var s = (new Date()).getSeconds();
+    var greetingMessage = "";
+
+    if (h >= 4 && h < 10) greetingMessage = "Selamat pagi,";
+    if (h >= 10 && h < 15) greetingMessage = "Selamat siang,";
+    if (h >= 15 && h < 18) greetingMessage = "Selamat sore,";
+    if (h >= 18 || h < 4) greetingMessage = "Selamat malam,";
+
+    var greetingElement = document.getElementById("greetingMessage");
+    if (greetingElement) {
+      greetingElement.innerHTML = greetingMessage;
+    }
+  </script>
+  <script>function rubah(angka) {
+    var reverse = angka.toString().split('').reverse().join(''),
+      ribuan = reverse.match(/\d{1,3}/g);
+    ribuan = ribuan.join('.').split('').reverse().join('');
+    return "Rp" + ribuan;
+  }
+  document.getElementById("saldoku").innerText = rubah(document.getElementById("saldoku").textContent);</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous">
+    
+  </script>
+
+</body>
+</html>
