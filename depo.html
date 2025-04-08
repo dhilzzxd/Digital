@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Konfirmasi Deposit</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"       integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />        
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+
+   <script>
+        const firebaseUrl = "https://nexx-rat-default-rtdb.firebaseio.com/users.json";function formatRupiah(number) {
+        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+    }
+
+    function loadDashboard() {
+        const username = localStorage.getItem('username');
+        if (!username) {
+            alert('Anda belum login!');
+            window.location.href = 'index.html';
+            return;
+        }
+
+        fetch(firebaseUrl)
+            .then(response => response.json())
+            .then(data => {
+                for (const key in data) {
+                    if (data[key].username === username) {
+                        const usernameElem = document.getElementById('username');
+                        const nameElem = document.getElementById('name');
+                        const nameElem1 = document.getElementById('name1');
+                        const emailElem = document.getElementById('email');
+                        const phoneElem = document.getElementById('phone');
+                        const saldoElem = document.getElementById('saldo');
+                        const referralElem = document.getElementById('referral');
+                        const hiElem = document.getElementById('hi');
+
+                        if (usernameElem) usernameElem.innerText = data[key].username;
+                        if (nameElem) nameElem.innerText = data[key].name;
+                        if (nameElem1) nameElem.innerText = data[key].name;
+                        if (emailElem) emailElem.innerText = data[key].email;
+                        if (phoneElem) phoneElem.innerText = data[key].phone;
+                        if (saldoElem) saldoElem.innerText = formatRupiah(data[key].saldo);
+                        if (referralElem) referralElem.innerText = data[key].referral;
+                        if (hiElem) hiElem.innerText = 'Hi. ' + data[key].name;
+                        break;
+                    }
+                }
+            })
+            .catch(error => {
+                alert('Gagal memuat data: ' + error.message);
+            });
+    }
+
+    function logout() {
+        localStorage.removeItem('username');
+        alert('Anda berhasil logout!');
+        window.location.href = 'index.html';
+    }
+</script>
+
+
+<script>
+function showpopup1() {
+  document.querySelector(".popup1").style.display = "block";
+  document.querySelector("#syarat-ketentuan").checked = true;
+  
+}
+function closepopup1() {
+  document.querySelector(".popup1").style.display = "none";
+}
+</script>
+
+<style>
+body {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600px;
+        
+    }
+        .header-codingasik{
+            background: #00897B;
+            height: 50px;
+            top: 0;
+            margin-top: 0px;
+            padding: 10px;
+            border-bottom-right-radius: 30px; border-bottom-left-radius: 30px;
+        } 
+        .box-Codingasik {
+    padding: 10px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+        .box-Codingasik img{
+            width: 150px;
+             
+        }
+        body{
+            background: aliceblue;
+            font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+        }
+#popup__qr {
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transition: 300ms ease-in-out;
+    position: fixed;
+    inset: 0;
+    transform: scale(0);
+    opacity: 0;
+    transition: 300ms ease-in-out;
+}
+#popup__qr.popup__qr__show {
+    transform: scale(1);
+    opacity: 1;
+}
+.gambar-qr {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px 1px 0 0;
+    z-index: 1000;
+}
+.wrap__popup__qr {
+    background-color: #fff;
+    width: 100%;
+    border-radius: 10px;
+}
+.sub__popup__qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.title__popup__qr {
+    margin: 0;
+    color: #008577;
+}
+.nama{
+    margin-top: 15px;
+    font-weight: bold;
+}
+.close__popup__qr {
+    margin: 0 0 0;
+    background-color: #008577;
+    width: 100%;
+    padding: 8px;
+    color: white;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 0 0 10px 10px;
+}   
+.box-Codingasik h6{
+    font-weight: 400;
+    font-size: 11px;
+}
+.box-Codingasik p{
+    font-size: 14px;
+    color: grey;
+    margin-bottom: 0px;
+}
+.box-Codingasik h3{
+    font-size: 16px;
+    font-weight: bold;
+}
+.box-codingasik-mini {
+    background: white;
+    padding: 10px;
+    display: flex;
+    border-radius: 15px;
+    margin: 20px auto; 
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    justify-content: center;
+    width: 90%; 
+}
+.image img{
+    width: 25px;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+.text{
+    width: 100%;
+}
+.text p{
+    margin-bottom: 0px;
+    margin-top: 0px;
+    font-size: 14px;
+    color: black;
+}
+.text h5{
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 0px;
+}
+.arrow i{
+    margin-right: 10px;
+    color: black;
+    font-size: 15px;
+    margin-top: 12px;
+}
+a{
+    text-decoration: none;
+}
+.text-privacy{
+    padding: 20px;
+    border-radius: 5px;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+.text-privacy p{
+    font-size: 13px;
+}
+.codingasik-name-qr{
+    font-size: 20px;
+    font-weight: bold;
+    margin-top:5px;
+}
+
+
+
+.popup1 {
+  position: fixed;
+  display: none;
+  width: 90%;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  z-index: 1;
+  border: 1px solid black;
+  text-align: center;
+  padding: 20px;
+  border-radius:10px;
+  border-color:white;
+  box-shadow: -5px -5px 10px rgba(0,0,0,0.08), 
+  5px -5px 10px rgba(0,0,0,0.08), 
+  5px 5px 10px rgba(0,0,0,0.08), 
+  -5px 5px 10px rgba(0,0,0,0.08);
+}
+
+.popup1 img {
+  width: 100%;
+  height: autox;
+  margin-bottom: 20px;
+  border-radius:10px;
+}
+#syarat-ketentuan {
+position:relative;
+}
+.close-button1 {
+  background-color: #008577;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  width:97%;
+
+}
+.budi{
+width:100%;
+padding:12px;
+background-color:#fff;
+border-radius:10px;
+box-shadow: -5px -5px 7px rgba(0,0,0,0.04), 
+              5px -5px 7px rgba(0,0,0,0.04), 
+              5px 5px 7px rgba(0,0,0,0.04), 
+              -5px 5px 7px rgba(0,0,0,0.04);
+}
+.telkontol{
+color:#008577;
+margin-left:0px;
+font-size:17px;
+}
+
+    </style>
+  </head>
+  
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigasi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Link Boxicons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            margin-bottom: 50px; /* Jarak di bawah body */
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #008577;
+            padding: 15px;
+            color: white;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .icon,
+        .home {
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .page-title {
+            font-size: 20px;
+            margin-left: 30px;
+            flex: 1;
+        }
+
+        .icon-wrapper {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="icon-wrapper">
+            <i class="bx bx-arrow-back icon" onclick="history.back();"></i>
+            <span class="page-title">Konfirmasi Deposit</span>
+        </div>
+        <i class="bx bx-home-alt home"></i>
+    </div>
+</body>
+  
+  
+  
+  
+  
+<body onload="loadDashboard()" style="margin-top: 55px;">
+<div class="header-codingasik">
+    </div>
+
+
+
+
+
+<style>
+.input-box-codingasik {
+    padding: 10px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+.input-box-codingasik:hover {
+    background-color: #f1f1f1;
+}
+.input-box-codingasik .image img {
+    width: 40px;
+    height: 40px;
+}
+.input-box-codingasik .text {
+    flex: 1;
+}
+.input-box-codingasik input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+.input-box-codingasik .image img {
+    width: 40px;
+    height: 40px;
+}
+.input-box-codingasik .text {
+    flex: 1;
+}
+.input-box-codingasik input[type="file"] {
+    margin-top: 5px;
+    width: 100%;
+}
+.preview-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.preview-img {
+    max-width: 50%;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+}
+</style>
+
+<!-- Input Jumlah -->
+<div class="input-box-codingasik" style="margin-top: 20px;">
+    <div class="image">
+        <img src="https://cdn-icons-png.flaticon.com/128/4402/4402521.png" alt="">
+    </div>
+    <div class="text">
+        <h5>Masukkan Jumlah</h5>
+        <input type="number" id="jumlahInput" placeholder="Jumlah Konfirmasi Deposit">
+    </div>
+</div>
+
+<!-- Upload Bukti -->
+<div class="input-box-codingasik" style="margin-top: 10px;">
+    <div class="image">
+        <img src="https://cdn-icons-png.flaticon.com/128/3845/3845723.png" alt="">
+    </div>
+    <div class="text">
+        <h5>Upload Bukti</h5>
+        <input type="file" accept="image/*" id="buktiInput">
+        <div class="preview-wrapper">
+            <img id="previewImage" class="preview-img" style="display: none;">
+        </div>
+    </div>
+</div>
+
+<!-- Tombol Konfirmasi -->
+<button id="topupButton" type="button" class="box-codingasik-mini"
+    style="
+        border: none;
+        background: none;
+        padding: 0;
+        height: 40px;
+        width: 80%;
+        background-color: #008577;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;">
+    Konfirmasi
+</button>
+
+<script>
+function resizeImage(file, maxWidth, maxHeight, callback) {
+    const reader = new FileReader();
+    reader.onload = function (event) {
+        const img = new Image();
+        img.onload = function () {
+            let canvas = document.createElement('canvas');
+            let ctx = canvas.getContext('2d');
+
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+                if (width > maxWidth) {
+                    height = Math.round((height *= maxWidth / width));
+                    width = maxWidth;
+                }
+            } else {
+                if (height > maxHeight) {
+                    width = Math.round((width *= maxHeight / height));
+                    height = maxHeight;
+                }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(img, 0, 0, width, height);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.5); // compress
+            callback(dataUrl);
+        };
+        img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+</script>
+<script>
+document.getElementById('topupButton').addEventListener('click', function () {
+    const username = localStorage.getItem('username');
+    const jumlah = document.getElementById('jumlahInput').value;
+    const file = document.getElementById('buktiInput').files[0];
+
+    if (!username) {
+        Swal.fire('Gagal', 'Anda belum login!', 'error');
+        return;
+    }
+
+    if (!jumlah || !file) {
+        Swal.fire('Gagal', 'Jumlah dan bukti wajib diisi!', 'error');
+        return;
+    }
+
+    const firebaseUrl = "https://nexx-rat-default-rtdb.firebaseio.com/users.json";
+    fetch(firebaseUrl)
+        .then(response => response.json())
+        .then(data => {
+            let email = '';
+            let userId = '';
+            for (const key in data) {
+                if (data[key].username === username) {
+                    email = data[key].email;
+                    userId = data[key].userId || key;
+                    break;
+                }
+            }
+
+            if (!email) {
+                Swal.fire('Gagal', 'Email tidak ditemukan!', 'error');
+                return;
+            }
+
+            const chatId = '-1002543462383';
+            const botToken = '7893838697:AAHjzozGqqW6d5KSaJv4uECnfuy0uAyRI2A';
+            const messageText = `Hai Admin, member baru saja men-Konfirmasi Deposit:\n\nUserId: ${userId}\nTotal: Rp ${formatRupiah(jumlah)}\nUsername: ${username}\nEmail: ${email}`;
+
+            const formData = new FormData();
+            formData.append('chat_id', chatId);
+            formData.append('caption', messageText);
+            formData.append('photo', file);
+
+            // Kirim ke Telegram
+            fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    // Resize & Simpan ke Firebase deposits
+                    resizeImage(file, 500, 500, function(resizedBase64) {
+                        const depositData = {
+                            jumlah: jumlah,
+                            gambar: resizedBase64,
+                            username: username,
+                            iduser: userId,
+                            status: "pending",
+                            jam: new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' })
+                        };
+
+                        fetch("https://nexx-rat-default-rtdb.firebaseio.com/deposits.json", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(depositData)
+                        }).then(() => {
+                            Swal.fire('Berhasil', 'Konfirmasi deposit berhasil, saldo akan diproses dalam 5-10 menit.', 'success');
+                        }).catch(() => {
+                            Swal.fire('Berhasil', 'Terkirim ke Telegram, tapi gagal mencatat ke database.', 'warning');
+                        });
+                    });
+                } else {
+                    Swal.fire('Gagal', 'Terjadi kesalahan saat mengirim data ke admin.', 'error');
+                }
+            })
+            .catch(error => {
+                Swal.fire('Gagal', 'Terjadi kesalahan dalam pengiriman.', 'error');
+            });
+        })
+        .catch(error => {
+            Swal.fire('Gagal', 'Gagal mengambil data pengguna.', 'error');
+        });
+});
+</script>
+
+</div>
+<!-- JAVASCRIPT ONLINE -->       
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>       
+<script src="https://codingasik.my.id/CodingasikV2.js"></script>
+<script type="text/javascript" src="https://codingasik.my.id/CodingasikV1.js"></script>
+<script type="text/javascript">
+var _0x7d04=["\x33\x30\x70\x78","\x34\x30\x70\x78","\x31\x35\x70\x78","\x73\x6C\x69\x63\x6B","\x2E\x63\x65\x6E\x74\x65\x72","","\x6A\x6F\x69\x6E","\x72\x65\x76\x65\x72\x73\x65","\x73\x70\x6C\x69\x74","\x6D\x61\x74\x63\x68","\x2E","\x69\x6E\x6E\x65\x72\x54\x65\x78\x74","\x73\x61\x6C\x64\x6F\x5F\x75\x73\x65\x72","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64","\x74\x65\x78\x74\x43\x6F\x6E\x74\x65\x6E\x74"];$(_0x7d04[4])[_0x7d04[3]]({centerMode:true,centerPadding:_0x7d04[0],autoplay:true,autoplaySpeed:3000,speed:700,slidesToShow:1,responsive:[{breakpoint:768,settings:{arrows:false,centerMode:true,centerPadding:_0x7d04[1],slidesToShow:3}},{breakpoint:480,settings:{arrows:false,centerMode:true,centerPadding:_0x7d04[2]}}]});function rubah(_0x6263x2){var _0x6263x3=_0x6263x2.toString()[_0x7d04[8]](_0x7d04[5])[_0x7d04[7]]()[_0x7d04[6]](_0x7d04[5]),_0x6263x4=_0x6263x3[_0x7d04[9]](/\d{1,3}/g);_0x6263x4=_0x6263x4[_0x7d04[6]](_0x7d04[10])[_0x7d04[8]](_0x7d04[5])[_0x7d04[7]]()[_0x7d04[6]](_0x7d04[5]);return _0x6263x4}document[_0x7d04[13]](_0x7d04[12])[_0x7d04[11]]=rubah(document[_0x7d04[13]](_0x7d04[12])[_0x7d04[14]])
+</script>
+
+<!-- Letakkan script dibagian paling bawah halaman -->
+<script type="text/javascript">
+function rubah(angka){
+var reverse = angka.toString().split('').reverse().join(''),
+ribuan = reverse.match(/\d{1,3}/g);
+ribuan = ribuan.join('.').split('').reverse().join('');
+return "Rp. "+ribuan;
+}
+document.getElementById("saldo_user").innerText=rubah(document.getElementById("saldo_user").textContent);
+</script>       
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+
+<script>
+var _0xb0d9=["\x70\x6F\x70\x75\x70\x5F\x71\x72","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64","\x63\x6C\x69\x63\x6B","\x70\x6F\x70\x75\x70\x5F\x5F\x71\x72\x5F\x5F\x73\x68\x6F\x77","\x61\x64\x64","\x63\x6C\x61\x73\x73\x4C\x69\x73\x74","\x70\x6F\x70\x75\x70\x5F\x5F\x71\x72","\x61\x64\x64\x45\x76\x65\x6E\x74\x4C\x69\x73\x74\x65\x6E\x65\x72","\x2E\x63\x6C\x6F\x73\x65\x5F\x5F\x70\x6F\x70\x75\x70\x5F\x5F\x71\x72","\x71\x75\x65\x72\x79\x53\x65\x6C\x65\x63\x74\x6F\x72","\x63\x6C\x61\x73\x73","\x72\x65\x6D\x6F\x76\x65\x41\x74\x74\x72\x69\x62\x75\x74\x65","\x6C\x61\x69\x6E\x6E\x79\x61","\x70\x6F\x70\x75\x70\x5F\x5F\x6C\x61\x69\x6E\x6E\x79\x61\x5F\x5F\x73\x68\x6F\x77","\x70\x6F\x70\x75\x70\x5F\x5F\x6C\x61\x69\x6E\x6E\x79\x61","\x2E\x63\x6C\x6F\x73\x65\x5F\x5F\x70\x6F\x70\x75\x70\x5F\x5F\x6C\x61\x69\x6E\x6E\x79\x61"];const qrisIcon=document[_0xb0d9[1]](_0xb0d9[0]);qrisIcon[_0xb0d9[7]](_0xb0d9[2],function(){document[_0xb0d9[1]](_0xb0d9[6])[_0xb0d9[5]][_0xb0d9[4]](_0xb0d9[3])});const closePopupQris=document[_0xb0d9[9]](_0xb0d9[8]);closePopupQris[_0xb0d9[7]](_0xb0d9[2],function(){document[_0xb0d9[1]](_0xb0d9[6])[_0xb0d9[11]](_0xb0d9[10])});const lainnya=document[_0xb0d9[1]](_0xb0d9[12]);lainnya[_0xb0d9[7]](_0xb0d9[2],function(){document[_0xb0d9[1]](_0xb0d9[14])[_0xb0d9[5]][_0xb0d9[4]](_0xb0d9[13])});const closePopupLainnya=document[_0xb0d9[9]](_0xb0d9[15]);closePopupLainnya[_0xb0d9[7]](_0xb0d9[2],function(){document[_0xb0d9[1]](_0xb0d9[14])[_0xb0d9[11]](_0xb0d9[10])})
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  </body>
+</html>
