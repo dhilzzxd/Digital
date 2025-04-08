@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Manajemen Deposit</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Link Boxicons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<style>
+body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            margin-bottom: 100px;
+        }
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 15px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            
+        }
+        .popup {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            visibility: hidden;
+        }
+        .popup.active {
+            visibility: visible;
+        }
+        .popup-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        </style>
+</head>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            margin-bottom: 20px; /* Jarak di bawah body */
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #008577;
+            padding: 15px;
+            color: white;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .icon,
+        .home {
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .page-title {
+            font-size: 20px;
+            margin-left: 30px;
+            flex: 1;
+        }
+
+        .icon-wrapper {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="icon-wrapper">
+            <i class="bx bx-arrow-back icon" onclick="history.back();"></i>
+            <span class="page-title">Kelola Deposit</span>
+        </div>
+        <i class="bx bx-home-alt home"></i>
+    </div>
+</body>
+
+
+
+<body class="bg-light">
+<div class="conlainer" style="margin-top: 70px;">
+    <div class="container mt-4" style="margin-top: 70px;">
+<!-- Tombol untuk buka popup -->
+
+
+<div id="depositTable" style="display: flex; flex-wrap: wrap; gap: 10px;"></div>
+</div>
+</div>
+<script>
+async function tampilkanDeposit() {
+    const res = await fetch('https://nexx-rat-default-rtdb.firebaseio.com/deposits.json');
+    const data = await res.json();
+    const container = document.getElementById('depositTable');
+    container.innerHTML = '';
+
+    for (let key in data) {
+        const depo = data[key];
+        const card = `
+        <div style="border:1px solid #ccc; border-radius:10px; padding:10px; margin:10px;">
+            <img src="${depo.gambar}" alt="Bukti" style="width:100%; max-width:250px; border-radius:10px;" onerror="this.src='https://via.placeholder.com/250x150?text=Bukti';">
+            <h4>Username: ${depo.username}</h4>
+            <p>UserId : ${depo.iduser}
+            <p>Jumlah: Rp ${depo.jumlah.toLocaleString()}</p>
+            <p>Status: ${depo.status}</p>
+            <button class="btn btn-success" onclick="terimaDeposit('${key}', '${depo.userId}', ${depo.jumlah})">Terima</button>
+            <button class="btn btn-danger" onclick="tolakDeposit('${key}')">Tolak</button>
+            <button class="btn btn-secondary" onclick="hapusDeposit('${key}')">Hapus</button>
+        </div>`;
+        container.innerHTML += card;
+    }
+}
+
+async function terimaDeposit(key, userId, jumlah) {
+    // Ambil data user
+    const res = await fetch(`https://nexx-rat-default-rtdb.firebaseio.com/users.json`);
+    const users = await res.json();
+
+    for (let uid in users) {
+        if (users[uid].userId == userId) {
+            const saldoBaru = (users[uid].saldo || 0) + jumlah;
+            // Update saldo user
+            await fetch(`https://nexx-rat-default-rtdb.firebaseio.com/users/${uid}.json`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ saldo: saldoBaru })
+            });
+            break;
+        }
+    }
+
+    // Ubah status deposit jadi Diterima
+    await fetch(`https://nexx-rat-default-rtdb.firebaseio.com/deposits/${key}.json`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: "Diterima" })
+    });
+
+    Swal.fire('Sukses!', 'Deposit diterima dan saldo ditambahkan.', 'success');
+    tampilkanDeposit();
+}
+
+async function tolakDeposit(key) {
+    await fetch(`https://nexx-rat-default-rtdb.firebaseio.com/deposits/${key}.json`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: "Ditolak" })
+    });
+
+    Swal.fire('Ditolak!', 'Deposit ditolak.', 'info');
+    tampilkanDeposit();
+}
+
+async function hapusDeposit(key) {
+    await fetch(`https://nexx-rat-default-rtdb.firebaseio.com/deposits/${key}.json`, {
+        method: 'DELETE'
+    });
+
+    Swal.fire('Dihapus!', 'Deposit berhasil dihapus.', 'warning');
+    tampilkanDeposit();
+}
+
+window.onload = tampilkanDeposit;
+</script>
+
+</body>
+</html>
