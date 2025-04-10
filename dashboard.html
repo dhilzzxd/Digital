@@ -14,9 +14,11 @@
  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
 
     <script>
-        const firebaseUrl = "https://nexx-rat-default-rtdb.firebaseio.com/users.json";function formatRupiah(number) {
-        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
-    }
+        const firebaseUrl = "https://nexx-rat-default-rtdb.firebaseio.com/users.json";
+        function formatAngkaIndonesia(number) {
+    return number.toLocaleString('id-ID');
+}
+    
 
     function loadDashboard() {
         const username = localStorage.getItem('username');
