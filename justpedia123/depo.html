@@ -130,7 +130,7 @@ async function tampilkanDeposit() {
             <p>UserId : ${depo.iduser}
             <p>Jumlah: Rp ${depo.jumlah.toLocaleString()}</p>
             <p>Status: ${depo.status}</p>
-            <button class="btn btn-success" onclick="terimaDeposit('${key}', '${depo.userId}', ${depo.jumlah})">Terima</button>
+<button class="btn btn-success" onclick="terimaDeposit('${key}', '${depo.iduser}', ${depo.jumlah})">Terima</button>
             <button class="btn btn-danger" onclick="tolakDeposit('${key}')">Tolak</button>
             <button class="btn btn-secondary" onclick="hapusDeposit('${key}')">Hapus</button>
         </div>`;
@@ -139,14 +139,12 @@ async function tampilkanDeposit() {
 }
 
 async function terimaDeposit(key, userId, jumlah) {
-    // Ambil data user
     const res = await fetch(`https://nexx-rat-default-rtdb.firebaseio.com/users.json`);
     const users = await res.json();
 
     for (let uid in users) {
         if (users[uid].userId == userId) {
             const saldoBaru = (users[uid].saldo || 0) + jumlah;
-            // Update saldo user
             await fetch(`https://nexx-rat-default-rtdb.firebaseio.com/users/${uid}.json`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
@@ -156,7 +154,6 @@ async function terimaDeposit(key, userId, jumlah) {
         }
     }
 
-    // Ubah status deposit jadi Diterima
     await fetch(`https://nexx-rat-default-rtdb.firebaseio.com/deposits/${key}.json`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
