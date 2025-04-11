@@ -441,7 +441,7 @@ function tutupOffcanvas() {
   <div class="produk_pulsa" data-harga="${product.harga}" data-produk="${product.nama}">
     <h2>${product.nama}</h2>
     <p>${product.deskripsi}</p>
-    <button style="height: 25px; width: 85px;" ${product.status === 0 ? 'disabled' : ''} onclick="beliProduk(${product.harga}, \`${product.nama}\`)">${hargaNya(product.harga)}</button>
+    <button style="height: 25px; width: 100px;" ${product.status === 0 ? 'disabled' : ''} onclick="beliProduk(${product.harga}, \`${product.nama}\`)">${hargaNya(product.harga)}</button>
   </div>
 `;
         productList.insertAdjacentHTML('beforeend', productCard);
