@@ -408,8 +408,7 @@ async function catatTransaksi(idPembeli, total, tujuan, produkNama) {
     return;
   }
 // Ambil username terbaru
-const { nama: usernameFetched } = await cekID(); 
-const { daya: dayaNya } = await cekID(); 
+const { nama: usernameFetched, daya: dayaNya } = await cekID();
 
 
 document.getElementById('offcanvasProduct').innerText = produkNama;
@@ -458,12 +457,10 @@ tampilkanOffcanvas();
 
 function tampilkanOffcanvas() {
   document.getElementById('offcanvasPurchase').classList.add('show');
-  document.getElementById('offcanvasBackdrop').style.display = 'block';
 }
 
 function tutupOffcanvas() {
   document.getElementById('offcanvasPurchase').classList.remove('show');
-  document.getElementById('offcanvasBackdrop').style.display = 'none';
 }
 
 
