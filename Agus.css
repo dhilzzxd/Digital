@@ -33,7 +33,7 @@ font-family: 'Montserrat Alternates', sans-serif;
   font-family: 'Montserrat Alternates', sans-serif;
 }
 
-.produk_pulsa button{
+.produk_pulsa button {
   font-size: 15px;
   float: right;
   margin-top: -27px;
@@ -41,8 +41,9 @@ font-family: 'Montserrat Alternates', sans-serif;
   font-family: 'Montserrat Alternates', sans-serif;
   font-weight: bold;
   border-radius: 6px;
-  background-color: #fff;
+  background-color: white;
   color: #008577;
+  border: none; /* menghilangkan garis hitam */
 }
 
 .kotak3 {
